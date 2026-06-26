@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Quản lý truyện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a12; --bg-card: #12121c; --bg-panel: #181825;
+      --text-primary: #e8e6e3; --text-secondary: #9d9ba8;
+      --gold: #c9a050; --gold-light: #deb870; --gold-dim: #8a6d3b;
+      --accent-glow: rgba(201,160,80,0.25); --border-subtle: rgba(255,255,255,0.06);
+      --border-glow: rgba(201,160,80,0.25); --star-active: #f0b90b;
+      --danger: #e85353; --success: #4ade80; --transition-smooth: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Lora,Georgia,serif;background:var(--bg);color:var(--text-primary);line-height:1.7;min-height:100vh}
+    .container{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+    .admin-header{display:flex;align-items:center;gap:12px;padding:16px 0 24px;border-bottom:1px solid var(--border-subtle);margin-bottom:24px}
+    .admin-header iconify-icon{color:var(--gold);font-size:28px}
+    .admin-title{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold);letter-spacing:0.03em}
+    .admin-sub{font-size:0.78rem;color:var(--text-secondary);margin-left:auto}
+    .btn-back{display:inline-flex;align-items:center;gap:6px;color:var(--text-secondary);text-decoration:none;font-size:0.82rem;padding:6px 12px;border-radius:8px;border:1px solid var(--border-subtle);transition:all var(--transition-smooth)}
+    .btn-back:hover{color:var(--gold);border-color:var(--border-glow)}
+    h2{font-family:"Playfair Display",serif;font-size:1.15rem;margin-bottom:16px;color:var(--gold-dim)}
+    .form-group{margin-bottom:16px}
+    .form-label{display:block;font-size:0.8rem;color:var(--text-secondary);margin-bottom:4px;font-weight:500}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    input,select,textarea{
+      width:100%;padding:9px 14px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border-subtle);
+      color:var(--text-primary);font-family:inherit;font-size:0.84rem;transition:border-color var(--transition-smooth)
+    }
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--border-glow)}
+    textarea{resize:vertical;min-height:80px}
+    .tag-input-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 10px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:8px;min-height:42px}
+    .tag-input-wrap .tag-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;background:rgba(201,160,80,0.1);color:var(--gold);font-size:0.75rem}
+    .tag-input-wrap .tag-chip button{background:none;border:none;color:var(--gold);cursor:pointer;padding:0 2px;font-size:0.9rem;line-height:1}
+    .tag-input-wrap input{border:none;flex:1;min-width:80px;background:transparent;padding:4px 2px}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:10px;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all var(--transition-smooth);border:none}
+    .btn-primary{background:var(--gold);color:#0a0a0f}
+    .btn-primary:hover{background:var(--gold-light);box-shadow:0 0 14px var(--accent-glow)}
+    .btn-danger{background:transparent;border:1px solid var(--danger);color:var(--danger)}
+    .btn-danger:hover{background:rgba(232,83,83,0.1)}
+    .btn-secondary{background:transparent;border:1px solid var(--border-subtle);color:var(--text-primary)}
+    .btn-secondary:hover{border-color:var(--border-glow);color:var(--gold)}
+    .section{margin-bottom:32px;padding:20px;background:var(--bg-card);border-radius:14px;border:1px solid var(--border-subtle)}
+    .novel-list{list-style:none}
+    .novel-list li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-subtle)}
+    .novel-list li:last-child{border-bottom:none}
+    .novel-list .nl-info{flex:1}
+    .novel-list .nl-title{font-weight:600;font-size:0.9rem}
+    .novel-list .nl-meta{font-size:0.72rem;color:var(--text-secondary)}
+    .novel-list .nl-actions{display:flex;gap:4px}
+    .toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:10px;font-size:0.84rem;z-index:999;opacity:0;transform:translateY(12px);transition:all 0.3s}
+    .toast.show{opacity:1;transform:translateY(0)}
+    .toast-success{background:#0f2d1a;border:1px solid #2d5a3a;color:var(--success)}
+    .toast-error{background:#2d0f0f;border:1px solid #5a2d2d;color:var(--danger)}
+    .empty{text-align:center;color:var(--text-secondary);padding:20px 0;font-size:0.85rem}
+    .instructions{font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-top:12px}
+    .instructions code{background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:4px;font-size:0.78rem}
+    .login-wall{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px}
+    .login-wall input{max-width:280px}
+  </style>
+</head>
+<body>
+
+<div class="container" id="adminContent" style="display:none">
+
+  <header class="admin-header">
+    <iconify-icon icon="heroicons:cog-8-tooth-20-solid"></iconify-icon>
+    <span class="admin-title">Quản lý truyện</span>
+    <a href="index.html" class="btn-back"><iconify-icon icon="heroicons:arrow-left-20-solid" width="16" height="16"></iconify-icon> Về trang chủ</a>
+    <button class="btn btn-secondary btn-back" id="btnLogout" style="margin-left:auto"><iconify-icon icon="heroicons:arrow-right-start-on-rectangle-20-solid" width="16" height="16"></iconify-icon> Đăng xuất</button>
+  </header>
+
+  <div class="section">
+    <h2><iconify-icon icon="heroicons:plus-circle-20-solid" width="20" height="20" style="vertical-align:-4px;margin-right:6px;color:var(--gold)"></iconify-icon>Thêm bộ truyện mới</h2>
+    <form id="novelForm">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tên truyện *</label>
+          <input type="text" id="fTitle" required placeholder="Ví dụ: Cầu Đạo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tác giả *</label>
+          <input type="text" id="fAuthor" required placeholder="Ví dụ: Thạch Trư">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Đường dẫn thư mục (slug) *</label>
+        <input type="text" id="fSlug" required placeholder="Ví dụ: caudao — thư mục assets/files/caudao/">
+        <div class="instructions">Tên thư mục trong <code>assets/files/</code> chứa các file .txt. Ví dụ: <code>caudao</code> hoặc <code>truongsinhtienmon</code></div>
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Đánh giá (0-5)</label>
+          <input type="number" id="fRating" value="4.5" min="0" max="5" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lượt xem</label>
+          <input type="text" id="fViews" value="0" placeholder="Ví dụ: 2.3M">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trạng thái</label>
+          <select id="fStatus"><option value="ongoing">Đang ra</option><option value="completed">Hoàn thành</option></select>
+        </div>
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Số chương (ước tính)</label>
+          <input type="number" id="fChapters" value="0" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Số chữ</label>
+          <input type="text" id="fWordCount" value="0" placeholder="Ví dụ: 4.2M">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đề cử</label>
+          <input type="text" id="fRecs" value="0" placeholder="Ví dụ: 18.5K">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Thể loại</label>
+        <div class="tag-input-wrap" id="tagWrap">
+          <input type="text" id="tagInput" placeholder="Nhập thể loại rồi Enter...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mô tả</label>
+        <textarea id="fDesc" placeholder="Mô tả ngắn về bộ truyện..."></textarea>
+      </div>
+
+      <div class="form-group" style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="fHot" style="width:auto">
+        <label class="form-label" for="fHot" style="margin:0">Đánh dấu HOT (hiển thị trên slider trang chủ)</label>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button type="submit" class="btn btn-primary"><iconify-icon icon="heroicons:plus-circle-20-solid" width="18" height="18"></iconify-icon> Thêm truyện</button>
+        <button type="button" class="btn btn-secondary" id="btnClear">Xóa form</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2><iconify-icon icon="heroicons:document-list-20-solid" width="20" height="20" style="vertical-align:-4px;margin-right:6px;color:var(--gold)"></iconify-icon>Truyện đã thêm (localStorage)</h2>
+    <ul class="novel-list" id="extraNovelList"></ul>
+    <div class="instructions">
+      <strong>Để truyện hiển thị chương:</strong><br>
+      1. Tạo thư mục <code>assets/files/<em>slug</em>/</code><br>
+      2. Đặt các file .txt vào thư mục đó<br>
+      3. Chạy <code>.\assets\files\update-manifest.ps1</code> để cập nhật danh sách chương<br>
+      <br>
+      <strong>Để lưu vĩnh viễn:</strong> Sao chép JSON bên dưới vào file <code>assets/data/novels.json</code>
+    </div>
+  </div>
+
+</div>
+
+<div class="login-wall" id="loginWall">
+  <iconify-icon icon="heroicons:shield-check-20-solid" width="48" height="48" style="color:var(--gold)"></iconify-icon>
+  <h2 style="font-family:'Playfair Display',serif;color:var(--gold)">Đăng nhập Admin</h2>
+  <form id="adminLogin">
+    <input type="email" id="loginEmail" placeholder="Email" required style="margin-bottom:8px">
+    <input type="password" id="loginPass" placeholder="Mật khẩu" required style="margin-bottom:12px">
+    <button type="submit" class="btn btn-primary" style="width:100%">Đăng nhập</button>
+  </form>
+  <div id="loginError" style="color:var(--danger);font-size:0.82rem;display:none"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/js/auth.js"></script>
+<script>
+(function () {
+  var tags = [];
+  var tagInput = document.getElementById("tagInput");
+  var tagWrap = document.getElementById("tagWrap");
+
+  var stream = {};
+  var extraList = [];
+
+  function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+  function showToast(msg, type) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.className = "toast " + (type === "error" ? "toast-error" : "toast-success") + " show";
+    clearTimeout(stream._toast);
+    stream._toast = setTimeout(function () { el.classList.remove("show"); }, 3000);
+  }
+
+  function loadExtras() {
+    try { return JSON.parse(localStorage.getItem("truyen_extra_novels") || "[]"); } catch (e) { return []; }
+  }
+
+  function saveExtras(arr) {
+    localStorage.setItem("truyen_extra_novels", JSON.stringify(arr));
+  }
+
+  function renderTag(chip) {
+    var span = document.createElement("span");
+    span.className = "tag-chip";
+    span.innerHTML = chip + ' <button type="button">&times;</button>';
+    span.querySelector("button").addEventListener("click", function () {
+      tags = tags.filter(function (t) { return t !== chip; });
+      span.remove();
+    });
+    tagWrap.insertBefore(span, tagInput);
+  }
+
+  tagInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      var val = tagInput.value.trim();
+      if (val && tags.indexOf(val) === -1) {
+        tags.push(val);
+        renderTag(val);
+      }
+      tagInput.value = "";
+    }
+  });
+
+  document.getElementById("btnClear").addEventListener("click", function () {
+    document.getElementById("novelForm").reset();
+    tags = [];
+    var chips = tagWrap.querySelectorAll(".tag-chip");
+    for (var i = 0; i < chips.length; i++) chips[i].remove();
+  });
+
+  function renderExtraList() {
+    extraList = loadExtras();
+    var el = document.getElementById("extraNovelList");
+    if (!extraList.length) {
+      el.innerHTML = '<li class="empty">Chưa có truyện nào được thêm. Dùng form bên trên để thêm.</li>';
+      return;
+    }
+    var html = "";
+    for (var i = 0; i < extraList.length; i++) {
+      var n = extraList[i];
+      var slug = n.slug || (n.title ? n.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") : "unknown");
+      html += '<li>' +
+        '<div class="nl-info">' +
+        '<div class="nl-title">' + esc(n.title || "Không tên") + ' <span style="font-size:0.7rem;color:var(--text-secondary)">(' + esc(slug) + ')</span></div>' +
+        '<div class="nl-meta">' + esc(n.author || "") + ' &middot; Rating: ' + (n.rating || 0) + ' &middot; ' + (n.status || "ongoing") + '</div>' +
+        '</div>' +
+        '<div class="nl-actions">' +
+        '<button class="btn btn-secondary" style="font-size:0.72rem;padding:4px 10px" onclick="viewJson(' + i + ')">JSON</button>' +
+        '<button class="btn btn-danger" style="font-size:0.72rem;padding:4px 8px" onclick="removeNovel(' + i + ')"><iconify-icon icon="heroicons:trash-20-solid" width="14" height="14"></iconify-icon></button>' +
+        '</div>' +
+        '</li>';
+    }
+    el.innerHTML = html;
+  }
+
+  window.viewJson = function (idx) {
+    var n = extraList[idx];
+    alert(JSON.stringify(n, null, 2));
+  };
+
+  window.removeNovel = function (idx) {
+    if (!confirm("Xóa truyện này khỏi danh sách?")) return;
+    extraList.splice(idx, 1);
+    saveExtras(extraList);
+    renderExtraList();
+    showToast("Đã xóa. Tải lại trang chủ để cập nhật.", "success");
+  };
+
+  document.getElementById("novelForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    var rawViews = document.getElementById("fViews").value.trim();
+    var vN = 0;
+    if (/^\d+(\.\d+)?[mM]$/i.test(rawViews)) vN = parseInt(parseFloat(rawViews) * 1000000);
+    else if (/^\d+(\.\d+)?[kK]$/i.test(rawViews)) vN = parseInt(parseFloat(rawViews) * 1000);
+    else vN = parseInt(rawViews) || 0;
+
+    var novel = {
+      slug: document.getElementById("fSlug").value.trim(),
+      title: document.getElementById("fTitle").value.trim(),
+      author: document.getElementById("fAuthor").value.trim(),
+      rating: parseFloat(document.getElementById("fRating").value) || 0,
+      tags: tags.slice(),
+      views: rawViews || "0",
+      vN: vN,
+      status: document.getElementById("fStatus").value,
+      hot: document.getElementById("fHot").checked,
+      desc: document.getElementById("fDesc").value.trim(),
+      chapters: parseInt(document.getElementById("fChapters").value) || 0,
+      wordCount: document.getElementById("fWordCount").value.trim() || "0",
+      recs: document.getElementById("fRecs").value.trim() || "0"
+    };
+
+    if (!novel.slug || !novel.title || !novel.author) {
+      showToast("Vui lòng điền đầy đủ: tên, tác giả, đường dẫn thư mục.", "error");
+      return;
+    }
+
+    var extras = loadExtras();
+    for (var i = 0; i < extras.length; i++) {
+      if (extras[i].slug === novel.slug) {
+        showToast("Đường dẫn \"" + novel.slug + "\" đã tồn tại!", "error");
+        return;
+      }
+    }
+
+    extras.push(novel);
+    saveExtras(extras);
+
+    document.getElementById("novelForm").reset();
+    tags = [];
+    var chips = tagWrap.querySelectorAll(".tag-chip");
+    for (var j = 0; j < chips.length; j++) chips[j].remove();
+
+    renderExtraList();
+    showToast("Đã thêm \"" + novel.title + "\". Tải lại trang chủ để thấy truyện mới!", "success");
+  });
+
+  function checkAuth() {
+    if (typeof TienAuth !== "undefined" && TienAuth.isLoggedIn()) {
+      var user = TienAuth.getUser();
+      if (user && user.email === "admin@tien.dao") {
+        document.getElementById("loginWall").style.display = "none";
+        document.getElementById("adminContent").style.display = "block";
+        renderExtraList();
+        return;
+      }
+    }
+    document.getElementById("loginWall").style.display = "flex";
+    document.getElementById("adminContent").style.display = "none";
+  }
+
+  document.getElementById("adminLogin").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("loginEmail").value.trim();
+    var pass = document.getElementById("loginPass").value;
+    var err = document.getElementById("loginError");
+    if (typeof TienAuth !== "undefined" && TienAuth.login(email, pass)) {
+      err.style.display = "none";
+      checkAuth();
+    } else {
+      err.textContent = "Sai email hoặc mật khẩu. Dùng admin@tien.dao / 123456";
+      err.style.display = "block";
+    }
+  });
+
+  document.getElementById("btnLogout").addEventListener("click", function () {
+    if (typeof TienAuth !== "undefined") TienAuth.logout();
+    document.getElementById("loginWall").style.display = "flex";
+    document.getElementById("adminContent").style.display = "none";
+  });
+
+  checkAuth();
+})();
+</script>
+
+</body>
+</html>

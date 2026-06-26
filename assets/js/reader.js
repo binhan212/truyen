@@ -4,6 +4,7 @@
 
   var chapters = [];
   var currentIndex = -1;
+  var novelSlug = null;
 
   var $bcChapter = document.getElementById("bcChapter");
   var $chapterSelectBtn = document.getElementById("chapteSelectBtn");
@@ -26,11 +27,8 @@
     xhr.overrideMimeType("text/plain; charset=utf-8");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-        if (xhr.status === 0 || xhr.status === 200) {
-          cb(null, xhr.responseText);
-        } else {
-          cb(new Error("HTTP " + xhr.status), null);
-        }
+        if (xhr.status === 0 || xhr.status === 200) cb(null, xhr.responseText);
+        else cb(new Error("HTTP " + xhr.status), null);
       }
     };
     xhr.onerror = function () { cb(new Error("Network error"), null); };
@@ -42,46 +40,60 @@
     var pairs = q.split("&");
     for (var i = 0; i < pairs.length; i++) {
       var kv = pairs[i].split("=");
-      if (decodeURIComponent(kv[0]) === name) {
-        return decodeURIComponent(kv[1] || "");
-      }
+      if (decodeURIComponent(kv[0]) === name) return decodeURIComponent(kv[1] || "");
     }
     return null;
   }
 
   function updateUrl(index) {
-    var url = window.location.pathname + "?ch=" + index;
+    var url = window.location.pathname + "?slug=" + encodeURIComponent(novelSlug) + "&ch=" + index;
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, "", url);
     }
   }
 
   function init() {
+    var slug = getQueryParam("slug");
+    if (!slug) {
+      showError("Thiếu tham số slug. Ví dụ: reader.html?slug=caudao");
+      return;
+    }
+    novelSlug = slug;
+
+    var bcNovel = document.querySelector(".bc-novel");
+    if (bcNovel) {
+      bcNovel.textContent = slug.replace(/-/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+      bcNovel.href = "detail.html?slug=" + encodeURIComponent(slug);
+    }
+
     httpGet(MANIFEST, function (err, data) {
       if (err) {
-        showError("Không tải được danh sách chương: assets/files/chapters.json");
+        showError("Không tải được danh sách chương: " + MANIFEST);
         return;
       }
-      try {
-        chapters = JSON.parse(data);
-      } catch (e) {
+      var allFiles;
+      try { allFiles = JSON.parse(data); } catch (e) {
         showError("chapters.json sai định dạng JSON");
         return;
       }
+
+      var prefix = slug + "/";
+      chapters = allFiles.filter(function (f) { return f.indexOf(prefix) === 0; });
+
       if (!chapters.length) {
-        showError("Không có chương nào trong danh sách");
+        showError("Không có chương nào cho bộ truyện \"" + slug + "\". Kiểm tra thư mục assets/files/" + slug + "/");
         return;
       }
+
       chapters = sortChapters(chapters);
 
       var startIdx = 0;
       var paramCh = getQueryParam("ch");
       if (paramCh !== null) {
         var p = parseInt(paramCh, 10);
-        if (!isNaN(p) && p >= 0 && p < chapters.length) {
-          startIdx = p;
-        }
+        if (!isNaN(p) && p >= 0 && p < chapters.length) startIdx = p;
       }
+
       loadChapterByIndex(startIdx);
     });
   }
@@ -98,7 +110,7 @@
   }
 
   function extractChapterNumber(filename) {
-    var name = filename.replace(/\.txt$/i, "");
+    var name = filename.replace(/\.txt$/i, "").replace(/^.*\//, "");
     var cleaned = name.replace(/[^\d]/g, " ");
     var nums = cleaned.split(/\s+/).filter(Boolean);
     for (var i = 0; i < nums.length; i++) {
@@ -154,9 +166,7 @@
       }
     }
 
-    if (/^[Cc]h\u01B0\u01A1ng\s\d+/.test(firstLine)) {
-      contentStart++;
-    }
+    if (/^[Cc]h\u01B0\u01A1ng\s\d+/.test(firstLine)) contentStart++;
 
     var title = parseChapterTitle(firstLine);
     $chapterTitle.textContent = title;
@@ -164,11 +174,8 @@
     var html = "";
     for (var i = contentStart; i < lines.length; i++) {
       var line = lines[i].trim();
-      if (line) {
-        html += "<p>" + esc(line) + "</p>\n";
-      } else if (html) {
-        html += "<p>&nbsp;</p>\n";
-      }
+      if (line) { html += "<p>" + esc(line) + "</p>\n"; }
+      else if (html) { html += "<p>&nbsp;</p>\n"; }
     }
     $chapterBody.innerHTML = html || "<p>&nbsp;</p>";
 
@@ -179,7 +186,7 @@
     $chapterCurrent.textContent = currentIndex + 1;
     $chapterTotal.textContent = chapters.length;
     if ($bcChapter) $bcChapter.textContent = title;
-    document.title = title + " - Cầu Đạo";
+    document.title = title + " - Đọc truyện";
 
     $loading.style.display = "none";
     $contentWrapper.style.display = "block";
@@ -247,8 +254,7 @@
   function showError(msg) {
     $loading.style.display = "none";
     $contentWrapper.style.display = "block";
-    $chapterBody.innerHTML =
-      '<p style="text-align:center;color:var(--text-secondary);padding:60px 0;">' + esc(msg) + "</p>";
+    $chapterBody.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:60px 0;">' + esc(msg) + "</p>";
     $chapterTitle.textContent = "Lỗi";
   }
 
@@ -268,31 +274,24 @@
     };
   }
 
-  $btnPrev.addEventListener("click", throttle(function () {
-    if (currentIndex > 0) loadChapterByIndex(currentIndex - 1);
-  }));
-  $btnNext.addEventListener("click", throttle(function () {
-    if (currentIndex < chapters.length - 1) loadChapterByIndex(currentIndex + 1);
-  }));
-  $chapterSelectBtn.addEventListener("click", openChapterPanel);
-  $chapterPanelClose.addEventListener("click", closeChapterPanel);
-  $chapterOverlay.addEventListener("click", function (e) {
-    if (e.target === $chapterOverlay) closeChapterPanel();
-  });
+  function initEvents() {
+    $chapterSelectBtn.addEventListener("click", openChapterPanel);
+    $chapterPanelClose.addEventListener("click", closeChapterPanel);
+    $chapterOverlay.addEventListener("click", function (e) {
+      if (e.target === $chapterOverlay) closeChapterPanel();
+    });
+    $btnPrev.addEventListener("click", throttle(function () { loadChapterByIndex(currentIndex - 1); }));
+    $btnNext.addEventListener("click", throttle(function () { loadChapterByIndex(currentIndex + 1); }));
 
-  document.addEventListener("keydown", function (e) {
-    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-    if ($chapterOverlay.classList.contains("active")) {
-      if (e.key === "Escape") closeChapterPanel();
-    } else {
-      if (e.key === "ArrowLeft") e.preventDefault() || $btnPrev.click();
-      if (e.key === "ArrowRight") e.preventDefault() || $btnNext.click();
-    }
-  });
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); loadChapterByIndex(currentIndex - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); loadChapterByIndex(currentIndex + 1); }
+    });
   }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () {
+    initEvents();
+    init();
+  });
+  else { initEvents(); init(); }
 })();

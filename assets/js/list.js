@@ -1,31 +1,6 @@
 (function () {
 
-var novels = [
-  {id:1,title:"Cầu Đạo",author:"Thạch Trư",rating:4.7,chapters:771,tags:["Tiên hiệp","Huyền huyễn"],views:"2.3M",vN:2300000,status:"ongoing",hot:true,desc:"Trần Khánh, một thiếu niên bình thường nơi thôn nhỏ, vô tình nhặt được khối ngọc bội cổ xưa. Từ đó con đường tu tiên rộng mở, truy tìm chân lý giữa vạn cổ đại đạo..."},
-  {id:2,title:"Phàm Nhân Tu Tiên",author:"Vong Ngữ",rating:4.9,chapters:2456,tags:["Tiên hiệp","Tu luyện"],views:"5.1M",vN:5100000,status:"ongoing",hot:true,desc:"Hàn Lập, một thiếu niên xuất thân nghèo khó, nhờ ý chí kiên cường và cơ duyên xảo hợp, từng bước bước lên đỉnh cao tu tiên giới, nơi kẻ yếu cũng có thể nghịch thiên..."},
-  {id:3,title:"Đấu Phá Thương Khung",author:"Thiên Tàm Thổ Đậu",rating:4.8,chapters:1648,tags:["Huyền huyễn","Dị thế"],views:"8.7M",vN:8700000,status:"completed",hot:true,desc:"Tiêu Viêm, thiên tài một thời bỗng chốc mất hết tu vi, trở thành phế vật bị cả thế gian khinh rẻ. Nhưng một ngày nọ, chiếc nhẫn bí ẩn đã thay đổi tất cả..."},
-  {id:4,title:"Vũ Động Càn Khôn",author:"Thiên Tàm Thổ Đậu",rating:4.7,chapters:1307,tags:["Huyền huyễn","Tu luyện"],views:"3.6M",vN:3600000,status:"completed",hot:true,desc:"Lâm Động, thiếu niên xuất thân từ gia tộc sa sút, vô tình nhặt được một tảng đá bí ẩn. Từ đó hắn bước lên con đường vũ động càn khôn, khuynh đảo thiên hạ..."},
-  {id:5,title:"Đại Chúa Tể",author:"Thiên Tàm Thổ Đậu",rating:4.6,chapters:1677,tags:["Huyền huyễn","Hệ thống"],views:"4.2M",vN:4200000,status:"completed",hot:true,desc:"Mục Trần, thiếu niên với linh mạch bị phong ấn, bước vào Bắc Thương Linh Viện để tìm kiếm con đường giải thoát cho bản thân và người mẹ đang mất tích..."},
-  {id:6,title:"Thần Mộ",author:"Thần Đông",rating:4.9,chapters:1756,tags:["Tiên hiệp","Huyền huyễn"],views:"6.3M",vN:6300000,status:"completed",desc:"Thần chết rồi, ma diệt rồi... Một vạn năm sau, Thần Nam từ trong mộ phần thức tỉnh. Hắn phát hiện thế giới đã thay đổi, còn hắn vẫn là kẻ lạc lõng giữa thời đại mới..."},
-  {id:7,title:"Trường Sinh Giới",author:"Thần Đông",rating:4.8,chapters:1892,tags:["Tiên hiệp","Viễn cổ"],views:"5.8M",vN:5800000,status:"ongoing",desc:"Một thế giới hùng vĩ nơi chư thần ngã xuống, vạn tộc tranh hùng. Thiếu niên Tiêu Thần mang trong mình bí mật ngàn đời, dấn thân vào hành trình tìm kiếm trường sinh..."},
-  {id:8,title:"Hoàn Mỹ Thế Giới",author:"Thần Đông",rating:4.9,chapters:2015,tags:["Tiên hiệp","Huyền huyễn"],views:"7.1M",vN:7100000,status:"completed",desc:"Thạch Hạo, một đứa trẻ bị gia tộc vứt bỏ nơi rừng hoang, được người rừng nuôi lớn. Hắn lớn lên cùng sức mạnh man hoang, từng bước khám phá bí mật của thế giới hoàn mỹ..."},
-  {id:9,title:"Tiên Nghịch",author:"Nhĩ Căn",rating:4.8,chapters:2088,tags:["Tiên hiệp","Tu luyện"],views:"4.9M",vN:4900000,status:"completed",desc:"Vương Lâm, một thiếu niên bình thường không có thiên phú, nhờ vào chiếc bình bí ẩn mà nghịch chuyển số mệnh, từng bước trở thành cường giả chí tôn giữa dòng đời nghiệt ngã..."},
-  {id:10,title:"Cầu Ma",author:"Nhĩ Căn",rating:4.7,chapters:1522,tags:["Tiên hiệp","Ma đạo"],views:"3.8M",vN:3800000,status:"completed",desc:"Tô Minh, một thiếu niên man tộc nơi núi rừng Ô Sơn, mang trong mình dòng máu đặc biệt. Số phận đưa đẩy hắn bước vào con đường ma đạo đầy máu và nước mắt..."},
-  {id:11,title:"Nhất Niệm Vĩnh Hằng",author:"Nhĩ Căn",rating:4.8,chapters:1314,tags:["Tiên hiệp","Hài hước"],views:"4.4M",vN:4400000,status:"completed",desc:"Bạch Tiểu Thuần, một thiếu niên sợ chết nhưng khao khát trường sinh bất tử. Hắn gia nhập môn phái tu tiên, dùng đủ mọi thủ đoạn chỉ để sống lâu hơn một chút..."},
-  {id:12,title:"Kiếm Lai",author:"Phong Hỏa Hí Chư Hầu",rating:4.9,chapters:1288,tags:["Tiên hiệp","Kiếm đạo"],views:"5.6M",vN:5600000,status:"ongoing",desc:"Trần Bình An, một thiếu niên nghèo khó nơi trấn nhỏ Nê Bình, bước vào con đường kiếm đạo rộng lớn. Một thanh kiếm, một bầu rượu, một đời phong lưu..."},
-  {id:13,title:"Tuyết Trung Hám Đao Hành",author:"Phong Hỏa Hí Chư Hầu",rating:4.9,chapters:1008,tags:["Võ hiệp","Quyền mưu"],views:"4.7M",vN:4700000,status:"completed",desc:"Từ Phượng Niên, thế tử Bắc Lương vương phủ, bề ngoài là kẻ ăn chơi trác táng, kỳ thực ẩn giấu tài trí hơn người. Một thanh đao, một tòa thành, một đời giang hồ..."},
-  {id:14,title:"Đạo Quân",author:"Ngã Cật Tây Hồng Thị",rating:4.6,chapters:980,tags:["Tiên hiệp","Hệ thống"],views:"2.9M",vN:2900000,status:"ongoing",desc:"Một lập trình viên hiện đại xuyên không đến thế giới tu tiên, mang theo hệ thống lập trình trong đầu. Hắn dùng tư duy logic để giải mã đại đạo, mở ra con đường chưa từng có..."},
-  {id:15,title:"Mục Thần Ký",author:"Trạch Trư",rating:4.8,chapters:1872,tags:["Tiên hiệp","Huyền huyễn"],views:"4.1M",vN:4100000,status:"completed",desc:"Tần Mục, một đứa trẻ được lão thôn trưởng nuôi dưỡng nơi thôn nhỏ Tàn Lão, lớn lên giữa những truyền thuyết xa xưa. Khi hắn bước ra khỏi thôn, cả thiên hạ chấn động..."},
-  {id:16,title:"Đế Tôn",author:"Trạch Trư",rating:4.7,chapters:1421,tags:["Tiên hiệp","Hệ thống"],views:"3.3M",vN:3300000,status:"ongoing",desc:"Giang Nam, một thư sinh yếu đuối, mang trong mình bí mật của một đời đế tôn. Hắn dùng trí tuệ và mưu lược để từng bước chinh phục thế giới tu tiên tàn khốc..."},
-  {id:17,title:"Vạn Cổ Thần Đế",author:"Phiêu Miễu",rating:4.5,chapters:2134,tags:["Huyền huyễn","Tu luyện"],views:"2.8M",vN:2800000,status:"ongoing",desc:"Một vị thần đế vẫn lạc ngàn năm trước, mang theo ký ức tiền kiếp trùng sinh vào thân xác thiếu niên. Từ đỉnh cao rơi xuống vực sâu, hắn quyết tâm một lần nữa bước lên..."},
-  {id:18,title:"Thái Cổ Long Tượng Quyết",author:"Vọng Nguyệt",rating:4.6,chapters:876,tags:["Tiên hiệp","Viễn cổ"],views:"2.1M",vN:2100000,status:"ongoing",desc:"Thiếu niên với long tượng huyết mạch thức tỉnh, có được sức mạnh của thái cổ long tượng. Mỗi một lần thức tỉnh, thực lực của hắn tăng lên gấp bội..."},
-  {id:19,title:"Nghịch Thiên Tà Thần",author:"Hỏa Tinh",rating:4.8,chapters:1987,tags:["Tiên hiệp","Nghịch tập"],views:"5.2M",vN:5200000,status:"ongoing",desc:"Vân Triệt, một thiếu niên mang trong mình huyền mạch bị phong ấn và viên tà châu bí ẩn. Hắn thề sẽ bảo vệ những người mình yêu thương, dù có phải nghịch thiên cải mệnh..."},
-  {id:20,title:"Linh Vực",author:"Nghịch Thương Thiên",rating:4.6,chapters:2100,tags:["Huyền huyễn","Linh khí"],views:"3.4M",vN:3400000,status:"ongoing",desc:"Tần Liệt, thiếu niên bị gia tộc ruồng bỏ, mang trong mình thiên lôi chi lực hiếm có. Tại Linh Vực rộng lớn, hắn từng bước khám phá sức mạnh tiềm ẩn của chính mình..."},
-  {id:21,title:"Tuyệt Thế Võ Hồn",author:"Lạc Thiên",rating:4.5,chapters:3456,tags:["Huyền huyễn","Võ hồn"],views:"4.9M",vN:4900000,status:"ongoing",desc:"Trần Phong, một thiếu niên với võ hồn rác rưởi bị cả thế gian chê cười. Nhưng sau một lần kỳ ngộ, võ hồn của hắn thức tỉnh, để lộ bản chất tuyệt thế kinh thiên..."},
-  {id:22,title:"Cửu Tinh Bá Thể Quyết",author:"Bình Phàm",rating:4.4,chapters:4123,tags:["Tiên hiệp","Thể tu"],views:"3.1M",vN:3100000,status:"ongoing",desc:"Long Trần, một thiếu niên bị vứt bỏ, tình cờ có được Cửu Tinh Bá Thể Quyết cổ lão. Con đường thể tu đầy chông gai, nhưng thành tựu đạt được khiến chư thiên run sợ..."},
-  {id:23,title:"Thương Khung Chi Thượng",author:"Ngã Cật Tây Hồng Thị",rating:4.7,chapters:1567,tags:["Tiên hiệp","Huyền huyễn"],views:"3.9M",vN:3900000,status:"completed",desc:"Một thế giới kỳ ảo nơi con người có thể tu luyện đến đỉnh cao, trở thành tồn tại vượt lên trên thương khung. Hành trình của một thiếu niên từ số không đến vô địch..."},
-  {id:24,title:"Nguyên Tôn",author:"Thiên Tàm Thổ Đậu",rating:4.5,chapters:1520,tags:["Huyền huyễn","Trùng sinh"],views:"2.6M",vN:2600000,status:"ongoing",desc:"Chu Nguyên, thiên tài một thời mang oán khí trong lòng, trong một lần kỳ ngộ đã có được Cửu Thú Khai Thiên Quyết. Từ hắn bắt đầu con đường báo thù và chinh phục..."}
-];
+var novels = [];
 
 var coverChars = "仙道劍帝神龍魔尊天玄蒼冥星月雲風雷火冰霜".split("");
 var coverBg = [
@@ -72,7 +47,7 @@ function applyFilters() {
   if (currentSort === "rating") list.sort(function (a, b) { return b.rating - a.rating; });
   else if (currentSort === "views") list.sort(function (a, b) { return b.vN - a.vN; });
   else if (currentSort === "chapters") list.sort(function (a, b) { return b.chapters - a.chapters; });
-  else if (currentSort === "newest") list.sort(function (a, b) { return b.id - a.id; });
+  else if (currentSort === "newest") list.sort(function (a, b) { return b._idx - a._idx; });
 
   filteredList = list;
   currentPage = 1;
@@ -103,12 +78,12 @@ function render() {
   var html = "";
   for (var i = 0; i < pageItems.length; i++) {
     var n = pageItems[i];
-    var bg = coverBg[(n.id - 1) % coverBg.length];
-    var ch = coverChars[(n.id * 3 + 1) % coverChars.length];
+    var bg = coverBg[n._idx % coverBg.length];
+    var ch = coverChars[(n._idx * 3 + 1) % coverChars.length];
     var badge = getBadgeType(n);
 
     html +=
-      '<a class="card-h" href="detail.html">' +
+      '<a class="card-h" href="detail.html?slug=' + encodeURIComponent(n._slug) + '">' +
       '<div class="card-h-cover" style="background:' + bg + '">' +
       (badge ? '<span class="card-h-badge ' + badge + '">' + (badge === "full" ? "FULL" : badge === "new" ? "MỚI" : badge === "hot" ? "HOT" : "CH." + n.chapters) + '</span>' : "") +
       '<span class="cv-char">' + ch + '</span>' +
@@ -242,7 +217,10 @@ function init() {
   initSidebar();
 }
 
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-else init();
+NovelsData.onReady(function (data) {
+  novels = data;
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+});
 
 })();
