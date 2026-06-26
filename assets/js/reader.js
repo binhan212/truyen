@@ -201,6 +201,7 @@
       (function (idx) {
         var fileName = chapters[idx];
         var num = extractChapterNumber(fileName);
+        var displayName = fileName.replace(/\.txt$/i, "").replace(/^.*\//, "");
         var item = document.createElement("button");
         item.className = "chapter-item";
         item.dataset.index = idx;
@@ -212,7 +213,7 @@
 
         var nameEl = document.createElement("div");
         nameEl.className = "ch-name";
-        nameEl.textContent = fileName.replace(/\.txt$/i, "");
+        nameEl.textContent = displayName;
 
         item.appendChild(numEl);
         item.appendChild(nameEl);

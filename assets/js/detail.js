@@ -63,7 +63,7 @@
       (function (idx) {
         var fileName = chapters[idx];
         var num = extractChapterNumber(fileName);
-        var label = num !== null ? "Chương " + num : fileName.replace(/\.txt$/i, "");
+        var label = num !== null ? "Chương " + num : fileName.replace(/\.txt$/i, "").replace(/^.*\//, "");
 
         var a = document.createElement("a");
         a.className = "ch-row";

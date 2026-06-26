@@ -7,7 +7,9 @@ if (-not (Test-Path $filesDir -PathType Container)) {
     exit 1
 }
 
-$txtFiles = Get-ChildItem -Path $filesDir -Filter "*.txt" | Sort-Object Name | ForEach-Object { $_.Name }
+$txtFiles = Get-ChildItem -Path $filesDir -Recurse -Filter "*.txt" | Sort-Object FullName | ForEach-Object {
+    $_.FullName.Replace($filesDir, "").TrimStart("\", "/").Replace("\", "/")
+}
 
 $json = ConvertTo-Json -InputObject @($txtFiles) -Compress
 $outPath = Join-Path $filesDir "chapters.json"
