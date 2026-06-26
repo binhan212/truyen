@@ -119,6 +119,17 @@
   }
 
   function init() {
+    if (typeof TienAuth !== "undefined" && !TienAuth.isLoggedIn()) {
+      window.location.href = "login.html";
+      return;
+    }
+    var user = (typeof TienAuth !== "undefined") ? TienAuth.getUser() : null;
+    if (user) {
+      var avatarEl = document.getElementById("userAvatar");
+      var nameEl = document.querySelector(".profile-name");
+      if (avatarEl) avatarEl.textContent = user.avatar;
+      if (nameEl) nameEl.textContent = user.username;
+    }
     renderReading();
 
     var tabs = document.querySelectorAll("#tabBar .tab-btn");

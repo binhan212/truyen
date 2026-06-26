@@ -156,6 +156,19 @@ function init(){
   matchedList=novels.slice();
   applyFilters();
   initSidebar();
+
+  var q=getQueryParam("q");
+  if(q){
+    input.value=decodeURIComponent(q);
+    doSearch();
+  }
+}
+
+function getQueryParam(name){
+  var q=window.location.search.substring(1);
+  var pairs=q.split("&");
+  for(var i=0;i<pairs.length;i++){var kv=pairs[i].split("=");if(decodeURIComponent(kv[0])===name)return kv[1]||"";}
+  return null;
 }
 
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);

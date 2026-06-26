@@ -1,4 +1,6 @@
 (function(){
+  if(typeof TienAuth==="undefined"){alert("Lỗi: auth.js chưa được tải");return;}
+
   var form=document.getElementById("registerForm");
   var toast=document.getElementById("toast");
   var togglePw=document.getElementById("togglePw");
@@ -40,8 +42,12 @@
       if(pw!==confirmPw){showToast("Mật khẩu xác nhận không khớp",true);return;}
       if(!agree){showToast("Vui lòng đồng ý với điều khoản dịch vụ",true);return;}
 
+      var result=TienAuth.register(username,email,pw);
+      if(!result.success){showToast(result.error,true);return;}
       showToast("Đăng ký thành công! Đang chuyển hướng...",false);
-      setTimeout(function(){window.location.href="login.html";},1500);
+      setTimeout(function(){window.location.href="index.html";},1200);
     });
   }
+
+  if(TienAuth.isLoggedIn()){window.location.href="index.html";return;}
 })();

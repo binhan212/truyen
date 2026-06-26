@@ -80,12 +80,13 @@ body::before {
   padding: 7px 16px;
   flex: 1; max-width: 400px;
   transition: border-color var(--transition-smooth);
+  cursor: pointer;
 }
 .search-box:focus-within { border-color: var(--border-glow); }
 .search-box input {
   background: none; border: none; outline: none;
   color: var(--text-primary); font-family: inherit; font-size: 0.85rem;
-  width: 100%;
+  width: 100%; cursor: pointer;
 }
 .search-box input::placeholder { color: var(--text-secondary); }
 .search-box iconify-icon { color: var(--text-secondary); flex-shrink: 0; }
