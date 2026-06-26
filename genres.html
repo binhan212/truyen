@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thể loại - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root{--bg-deep:#08080f;--bg-panel:#0f0f1a;--bg-card:#151528;--bg-card-hover:#1b1b38;--gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;--text-primary:#d8d4c8;--text-secondary:#8a8780;--text-title:#e8dcc8;--accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);--border-glow:rgba(201,160,80,0.4);--shadow-gold:0 0 20px rgba(201,160,80,0.1);--transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg-deep);color:var(--text-primary);font-family:"Lora","Georgia","Times New Roman","Noto Serif",serif;min-height:100vh;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,80,0.04) 0%,transparent 55%),radial-gradient(ellipse at 30% 100%,rgba(160,90,40,0.03) 0%,transparent 50%);}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+    .top-bar{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg-deep) 80%,transparent);padding:18px 0 10px;backdrop-filter:blur(12px);}
+    .top-inner{display:flex;align-items:center;gap:16px;}
+    .back-link{display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--text-secondary);font-size:0.85rem;transition:color var(--transition-smooth);flex-shrink:0;}
+    .back-link:hover{color:var(--gold);}
+    .page-title{font-family:"Playfair Display","Lora",serif;font-size:1.25rem;font-weight:700;color:var(--gold);text-shadow:0 0 12px var(--accent-glow);}
+
+    .genre-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;padding:20px 0 60px;}
+    .genre-card{display:flex;align-items:center;gap:14px;background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;transition:all var(--transition-smooth);cursor:pointer;}
+    .genre-card:hover{border-color:var(--border-glow);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.35),var(--shadow-gold);background:var(--bg-card-hover);}
+    .genre-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.4rem;}
+    .genre-icon iconify-icon{color:#fff;}
+    .genre-icon.c1{background:linear-gradient(135deg,#8b4513,#d4943a);}
+    .genre-icon.c2{background:linear-gradient(135deg,#4a148c,#7b1fa2);}
+    .genre-icon.c3{background:linear-gradient(135deg,#0d3b66,#1a73e8);}
+    .genre-icon.c4{background:linear-gradient(135deg,#1b5e20,#388e3c);}
+    .genre-icon.c5{background:linear-gradient(135deg,#b71c1c,#e53935);}
+    .genre-icon.c6{background:linear-gradient(135deg,#004d40,#009688);}
+    .genre-icon.c7{background:linear-gradient(135deg,#3e2723,#5d4037);}
+    .genre-icon.c8{background:linear-gradient(135deg,#311b92,#512da8);}
+    .genre-info{flex:1;min-width:0;}
+    .genre-name{font-family:"Playfair Display","Lora",serif;font-size:0.95rem;font-weight:700;color:var(--text-title);}
+    .genre-count{font-size:0.75rem;color:var(--text-secondary);margin-top:2px;}
+    .genre-arrow{color:var(--text-secondary);flex-shrink:0;transition:all var(--transition-smooth);}
+    .genre-card:hover .genre-arrow{color:var(--gold);transform:translateX(3px);}
+
+    .footer{text-align:center;padding:30px 0;border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.8rem;}
+
+    @media(max-width:480px){
+      .container{padding:0 14px;}
+      .genre-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+      .genre-card{padding:14px 12px;gap:10px;}
+      .genre-icon{width:40px;height:40px;font-size:1.1rem;}
+      .genre-name{font-size:0.82rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title">Thể loại</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="genre-grid" id="genreGrid"></div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Đọc truyện online miễn phí
+</footer>
+
+<script>
+(function(){
+  var genres=[
+    {name:"Tiên hiệp",count:16,icon:"sparkles",cls:"c1",desc:"Tu tiên, phi thăng, trường sinh"},
+    {name:"Huyền huyễn",count:12,icon:"moon",cls:"c2",desc:"Phép thuật, dị năng, thế giới song song"},
+    {name:"Tu luyện",count:8,icon:"arrow-trending-up",cls:"c3",desc:"Luyện công, đột phá cảnh giới"},
+    {name:"Hệ thống",count:7,icon:"cog-6-tooth",cls:"c4",desc:"Xuyên không kèm hệ thống hỗ trợ"},
+    {name:"Kiếm đạo",count:5,icon:"bolt",cls:"c5",desc:"Kiếm tu, kiếm ý, kiếm vực"},
+    {name:"Võ hiệp",count:4,icon:"fire",cls:"c6",desc:"Giang hồ, võ lâm, ân oán"},
+    {name:"Dị thế",count:6,icon:"globe-alt",cls:"c7",desc:"Thế giới khác, chủng tộc mới"},
+    {name:"Trùng sinh",count:8,icon:"arrow-path",cls:"c8",desc:"Sống lại, làm lại cuộc đời"},
+    {name:"Xuyên không",count:9,icon:"rocket-launch",cls:"c1",desc:"Du hành thời không, không gian"},
+    {name:"Viễn cổ",count:5,icon:"clock",cls:"c2",desc:"Hồng hoang, thượng cổ, thần thoại"},
+    {name:"Ma đạo",count:3,icon:"moon",cls:"c3",desc:"Ma tu, tà đạo, hắc ám"},
+    {name:"Hài hước",count:4,icon:"face-smile",cls:"c4",desc:"Nhẹ nhàng, vui vẻ, giải trí"},
+    {name:"Quyền mưu",count:3,icon:"briefcase",cls:"c5",desc:"Đấu trí, chiến lược, chính trị"},
+    {name:"Nghịch tập",count:6,icon:"arrow-up-circle",cls:"c6",desc:"Phế vật thành thiên tài, báo thù"},
+    {name:"Linh khí",count:4,icon:"cloud",cls:"c7",desc:"Linh khí, nguyên tố, thiên địa"},
+    {name:"Võ hồn",count:3,icon:"shield-check",cls:"c8",desc:"Hồn lực, thức tỉnh, tiến hóa"},
+    {name:"Thể tu",count:2,icon:"heart",cls:"c1",desc:"Rèn thể, nhục thân thành thánh"},
+    {name:"Đô thị",count:3,icon:"building-office",cls:"c2",desc:"Hiện đại, thành phố, đời thường"},
+    {name:"Linh dị",count:2,icon:"eye",cls:"c3",desc:"Kinh dị, bí ẩn, tâm linh"},
+    {name:"Harem",count:3,icon:"users",cls:"c4",desc:"Đa nữ chủ, tình cảm lãng mạn"},
+    {name:"Điền văn",count:2,icon:"sun",cls:"c5",desc:"Nông thôn, ruộng vườn, bình yên"},
+    {name:"Cung đấu",count:2,icon:"bug-ant",cls:"c6",desc:"Đấu đá nội cung, mưu kế"},
+    {name:"Mạt thế",count:3,icon:"exclamation-triangle",cls:"c7",desc:"Tận thế, sinh tồn, zombie"},
+    {name:"Quân sự",count:1,icon:"shield-exclamation",cls:"c8",desc:"Chiến tranh, binh pháp, sách lược"},
+  ];
+
+  function render(){
+    var grid=document.getElementById("genreGrid");
+    if(!grid)return;
+    var html="";
+    for(var i=0;i<genres.length;i++){
+      var g=genres[i];
+      html+='<a class="genre-card" href="list.html?cat=all">'+
+        '<div class="genre-icon '+g.cls+'"><iconify-icon icon="heroicons:'+g.icon+'-20-solid" width="22" height="22"></iconify-icon></div>'+
+        '<div class="genre-info"><div class="genre-name">'+g.name+'</div><div class="genre-count">'+g.count+' truyện</div></div>'+
+        '<iconify-icon class="genre-arrow" icon="heroicons:chevron-right-20-solid" width="16" height="16"></iconify-icon>'+
+      '</a>';
+    }
+    grid.innerHTML=html;
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",render);
+  else render();
+})();
+</script>
+</body>
+</html>
