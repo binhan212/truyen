@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tải app - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root{--bg-deep:#08080f;--bg-panel:#0f0f1a;--bg-card:#151528;--bg-card-hover:#1b1b38;--gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;--text-primary:#d8d4c8;--text-secondary:#8a8780;--text-title:#e8dcc8;--accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);--border-glow:rgba(201,160,80,0.4);--shadow-gold:0 0 20px rgba(201,160,80,0.12);--transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg-deep);color:var(--text-primary);font-family:"Lora","Georgia","Times New Roman","Noto Serif",serif;min-height:100vh;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,80,0.04) 0%,transparent 55%),radial-gradient(ellipse at 30% 100%,rgba(160,90,40,0.03) 0%,transparent 50%);}
+    .container{max-width:900px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+    .top-bar{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg-deep) 80%,transparent);padding:18px 0 10px;backdrop-filter:blur(12px);}
+    .top-inner{display:flex;align-items:center;gap:16px;}
+    .back-link{display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--text-secondary);font-size:0.85rem;transition:color var(--transition-smooth);flex-shrink:0;}
+    .back-link:hover{color:var(--gold);}
+    .page-title{font-family:"Playfair Display","Lora",serif;font-size:1.25rem;font-weight:700;color:var(--gold);text-shadow:0 0 12px var(--accent-glow);}
+
+    .hero-section{text-align:center;padding:40px 0 20px;}
+    .app-icon{width:90px;height:90px;border-radius:22px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--gold-dim),var(--gold));box-shadow:0 0 40px var(--accent-glow);font-family:"Playfair Display",serif;font-size:2.5rem;color:#0a0a0f;font-weight:800;}
+    .hero-title{font-family:"Playfair Display",serif;font-size:1.8rem;font-weight:800;color:var(--text-title);text-shadow:0 0 20px var(--accent-glow);margin-bottom:8px;}
+    .hero-sub{font-size:0.95rem;color:var(--text-secondary);max-width:500px;margin:0 auto;line-height:1.7;}
+
+    .download-btns{display:flex;align-items:center;justify-content:center;gap:14px;padding:24px 0;flex-wrap:wrap;}
+    .dl-btn{display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:14px;border:1px solid var(--border-subtle);background:var(--bg-card);text-decoration:none;color:var(--text-primary);transition:all var(--transition-smooth);min-width:180px;}
+    .dl-btn:hover{border-color:var(--border-glow);background:var(--bg-card-hover);box-shadow:0 0 20px var(--accent-glow);transform:translateY(-2px);}
+    .dl-btn iconify-icon{flex-shrink:0;color:var(--gold);}
+    .dl-btn .dl-title{font-size:0.82rem;font-weight:600;color:var(--text-title);}
+    .dl-btn .dl-sub{font-size:0.7rem;color:var(--text-secondary);}
+
+    .divider{display:flex;align-items:center;gap:14px;margin:32px 0;color:var(--text-secondary);font-size:0.78rem;}
+    .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border-subtle);}
+
+    .guide-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;padding:0 0 40px;}
+    .guide-card{background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:12px;padding:24px;transition:all var(--transition-smooth);}
+    .guide-card:hover{border-color:var(--border-glow);}
+    .guide-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(201,160,80,0.1);color:var(--gold);font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:800;margin-bottom:14px;}
+    .guide-title{font-family:"Playfair Display","Lora",serif;font-size:0.95rem;font-weight:700;color:var(--text-title);margin-bottom:6px;}
+    .guide-text{font-size:0.82rem;color:var(--text-secondary);line-height:1.7;}
+
+    .feature-list{padding:20px 0 40px;display:flex;flex-direction:column;gap:12px;}
+    .feature-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:10px;transition:border-color var(--transition-smooth);}
+    .feature-item:hover{border-color:var(--border-glow);}
+    .feature-icon{color:var(--gold);flex-shrink:0;margin-top:2px;}
+    .feature-info{flex:1;}
+    .feature-name{font-size:0.88rem;font-weight:600;color:var(--text-title);margin-bottom:3px;}
+    .feature-desc{font-size:0.78rem;color:var(--text-secondary);line-height:1.6;}
+
+    .footer{text-align:center;padding:30px 0;border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.8rem;}
+
+    @media(max-width:480px){
+      .container{padding:0 14px;}
+      .hero-title{font-size:1.3rem;}
+      .dl-btn{min-width:140px;padding:12px 18px;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title">Tải ứng dụng</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero-section">
+    <div class="app-icon">仙</div>
+    <h1 class="hero-title">Thư Viện Tiên Đạo</h1>
+    <p class="hero-sub">Đọc truyện mọi lúc mọi nơi, kể cả khi không có kết nối mạng. Trải nghiệm đọc mượt mà trên mọi thiết bị.</p>
+  </div>
+
+  <div class="download-btns">
+    <a href="#" class="dl-btn">
+      <iconify-icon icon="heroicons:device-phone-mobile-20-solid" width="28" height="28"></iconify-icon>
+      <span><div class="dl-title">Android APK</div><div class="dl-sub">Tải file .apk</div></span>
+    </a>
+    <a href="#" class="dl-btn">
+      <iconify-icon icon="heroicons:globe-alt-20-solid" width="28" height="28"></iconify-icon>
+      <span><div class="dl-title">Web App (PWA)</div><div class="dl-sub">Cài trực tiếp từ trình duyệt</div></span>
+    </a>
+  </div>
+
+  <div class="divider">TÍNH NĂNG NỔI BẬT</div>
+
+  <div class="feature-list">
+    <div class="feature-item">
+      <iconify-icon class="feature-icon" icon="heroicons:arrow-down-tray-20-solid" width="20" height="20"></iconify-icon>
+      <div class="feature-info"><div class="feature-name">Tải chương về đọc offline</div><div class="feature-desc">Tải toàn bộ chương truyện về máy, đọc mọi lúc không cần mạng. Tự động xóa cache sau khi đọc xong để tiết kiệm dung lượng.</div></div>
+    </div>
+    <div class="feature-item">
+      <iconify-icon class="feature-icon" icon="heroicons:moon-20-solid" width="20" height="20"></iconify-icon>
+      <div class="feature-info"><div class="feature-name">Chế độ tối toàn diện</div><div class="feature-desc">Giao diện tối chuyên biệt cho đọc truyện, giảm mỏi mắt khi đọc lâu. Hỗ trợ tùy chỉnh độ sáng, cỡ chữ, font chữ.</div></div>
+    </div>
+    <div class="feature-item">
+      <iconify-icon class="feature-icon" icon="heroicons:bookmark-20-solid" width="20" height="20"></iconify-icon>
+      <div class="feature-info"><div class="feature-name">Đồng bộ tủ sách</div><div class="feature-desc">Đồng bộ danh sách đang đọc, đã lưu và lịch sử giữa các thiết bị. Không lo mất dấu trang khi đổi máy.</div></div>
+    </div>
+    <div class="feature-item">
+      <iconify-icon class="feature-icon" icon="heroicons:bell-alert-20-solid" width="20" height="20"></iconify-icon>
+      <div class="feature-info"><div class="feature-name">Thông báo chương mới</div><div class="feature-desc">Nhận thông báo ngay khi truyện bạn đang theo dõi có chương mới. Không bao giờ bỏ lỡ bất kỳ chương nào.</div></div>
+    </div>
+  </div>
+
+  <div class="divider">CÁCH CÀI ĐẶT WEB APP (PWA)</div>
+
+  <div class="guide-cards">
+    <div class="guide-card">
+      <div class="guide-num">1</div>
+      <div class="guide-title">Mở bằng trình duyệt</div>
+      <div class="guide-text">Truy cập trang web bằng Chrome (Android) hoặc Safari (iOS) trên điện thoại của bạn.</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">2</div>
+      <div class="guide-title">Nhấn "Thêm vào màn hình"</div>
+      <div class="guide-text">Chrome: nhấn menu (3 chấm) → "Thêm vào Màn hình chính". Safari: nhấn nút Share → "Thêm vào Màn hình chính".</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">3</div>
+      <div class="guide-title">Mở app từ màn hình</div>
+      <div class="guide-text">Sau khi thêm, biểu tượng app sẽ xuất hiện trên màn hình chính. Mở app và tận hưởng trải nghiệm đọc tuyệt vời!</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Ứng dụng đọc truyện
+</footer>
+
+</body>
+</html>
