@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông báo - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root{--bg-deep:#08080f;--bg-panel:#0f0f1a;--bg-card:#151528;--bg-card-hover:#1b1b38;--gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;--text-primary:#d8d4c8;--text-secondary:#8a8780;--text-title:#e8dcc8;--accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);--border-glow:rgba(201,160,80,0.4);--shadow-gold:0 0 20px rgba(201,160,80,0.1);--transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);--unread-dot:#e85353;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg-deep);color:var(--text-primary);font-family:"Lora","Georgia","Times New Roman","Noto Serif",serif;min-height:100vh;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,80,0.04) 0%,transparent 55%),radial-gradient(ellipse at 30% 100%,rgba(160,90,40,0.03) 0%,transparent 50%);}
+    .container{max-width:800px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+    .top-bar{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg-deep) 80%,transparent);padding:18px 0 10px;backdrop-filter:blur(12px);}
+    .top-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .back-link{display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--text-secondary);font-size:0.85rem;transition:color var(--transition-smooth);flex-shrink:0;}
+    .back-link:hover{color:var(--gold);}
+    .page-title{font-family:"Playfair Display","Lora",serif;font-size:1.25rem;font-weight:700;color:var(--gold);text-shadow:0 0 12px var(--accent-glow);}
+    .mark-all-btn{background:none;border:1px solid var(--border-subtle);color:var(--text-secondary);font-family:inherit;font-size:0.78rem;padding:6px 14px;border-radius:99px;cursor:pointer;transition:all var(--transition-smooth);}
+    .mark-all-btn:hover{border-color:var(--border-glow);color:var(--gold-light);}
+
+    .tab-bar{display:flex;gap:6px;padding:8px 0 16px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
+    .tab-bar::-webkit-scrollbar{display:none;}
+    .tab-btn{display:flex;align-items:center;gap:5px;padding:8px 18px;border-radius:99px;background:none;border:1px solid var(--border-subtle);color:var(--text-secondary);font-family:inherit;font-size:0.84rem;cursor:pointer;white-space:nowrap;transition:all var(--transition-smooth);flex-shrink:0;}
+    .tab-btn:hover{border-color:var(--border-glow);color:var(--text-primary);}
+    .tab-btn.active{background:rgba(201,160,80,0.1);border-color:var(--border-glow);color:var(--gold);font-weight:600;}
+    .tab-btn .badge{font-size:0.7rem;background:var(--unread-dot);color:#fff;padding:1px 7px;border-radius:99px;min-width:20px;text-align:center;}
+
+    .notif-list{display:flex;flex-direction:column;padding-bottom:60px;}
+    .notif-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(201,160,80,0.04);cursor:pointer;transition:background var(--transition-smooth);text-decoration:none;color:inherit;position:relative;}
+    .notif-item:hover{background:rgba(201,160,80,0.02);margin:0 -12px;padding:16px 12px;border-radius:10px;}
+    .notif-item.unread::after{content:"";position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:var(--unread-dot);}
+    .notif-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .notif-icon.chapter{background:rgba(32,139,64,0.2);color:#4ade80;}
+    .notif-icon.like{background:rgba(232,55,83,0.2);color:#e85353;}
+    .notif-icon.comment{background:rgba(59,130,246,0.2);color:#60a5fa;}
+    .notif-icon.system{background:rgba(201,160,80,0.2);color:#e0c87c;}
+    .notif-icon.rank{background:rgba(168,85,247,0.2);color:#c084fc;}
+    .notif-content{flex:1;min-width:0;}
+    .notif-text{font-size:0.9rem;color:var(--text-primary);line-height:1.5;}
+    .notif-text .hl{color:var(--gold-light);font-weight:600;}
+    .notif-time{font-size:0.72rem;color:var(--text-secondary);margin-top:4px;}
+    .notif-unread-badge{font-size:0.75rem;color:var(--gold-light);font-weight:600;margin-top:2px;}
+
+    .empty-state{text-align:center;padding:80px 0;color:var(--text-secondary);}
+    .footer{text-align:center;padding:30px 0;border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.8rem;}
+
+    @media(max-width:480px){
+      .container{padding:0 14px;}
+      .notif-item{flex-direction:column;gap:8px;}
+      .notif-icon{width:36px;height:36px;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title">Thông báo</h1>
+      <button class="mark-all-btn" id="markAllBtn">Đánh dấu đã đọc</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-tab="all">Tất cả</button>
+    <button class="tab-btn" data-tab="unread">Chưa đọc <span class="badge">5</span></button>
+    <button class="tab-btn" data-tab="system">Hệ thống</button>
+  </div>
+
+  <div class="notif-list" id="notifList"></div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Trung tâm thông báo
+</footer>
+
+<script src="assets/js/notifications.js"></script>
+</body>
+</html>
