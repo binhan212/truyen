@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách truyện - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/list.css">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title" id="pageTitle">Danh sách truyện</h1>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="page-layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">
+          <iconify-icon icon="heroicons:tag-20-solid" width="15" height="15"></iconify-icon>
+          Danh mục
+        </div>
+        <div class="sidebar-list" id="catList">
+          <button class="sidebar-item active" data-cat="all">Tất cả <span class="count">24</span></button>
+          <button class="sidebar-item" data-cat="recommend">Đề cử <span class="count" id="cntRecommend"></span></button>
+          <button class="sidebar-item" data-cat="latest">Mới nhất <span class="count" id="cntLatest"></span></button>
+          <button class="sidebar-item" data-cat="mostread">Đọc nhiều <span class="count" id="cntMostread"></span></button>
+          <button class="sidebar-item" data-cat="newposted">Mới đăng <span class="count" id="cntNewposted"></span></button>
+          <button class="sidebar-item" data-cat="completed">Hoàn thành <span class="count" id="cntCompleted"></span></button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">
+          <iconify-icon icon="heroicons:bars-arrow-down-20-solid" width="15" height="15"></iconify-icon>
+          Sắp xếp
+        </div>
+        <div class="sidebar-list" id="sortList">
+          <button class="sidebar-item active" data-sort="default">Mặc định</button>
+          <button class="sidebar-item" data-sort="rating">Đánh giá cao</button>
+          <button class="sidebar-item" data-sort="views">Lượt đọc</button>
+          <button class="sidebar-item" data-sort="chapters">Số chương</button>
+          <button class="sidebar-item" data-sort="newest">Mới nhất</button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">
+          <iconify-icon icon="heroicons:funnel-20-solid" width="15" height="15"></iconify-icon>
+          Trạng thái
+        </div>
+        <div class="sidebar-list" id="statusList">
+          <button class="sidebar-item active" data-status="all">Tất cả</button>
+          <button class="sidebar-item" data-status="ongoing">Đang ra</button>
+          <button class="sidebar-item" data-status="completed">Hoàn thành</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+      <div class="info-bar">
+        <span id="pageInfo">Hiển thị 1-10 / 24 truyện</span>
+      </div>
+      <div class="card-list" id="cardList"></div>
+      <div class="pagination-wrap" id="pagination"></div>
+    </main>
+
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Đọc truyện online miễn phí
+</footer>
+
+<script src="assets/js/list.js"></script>
+</body>
+</html>

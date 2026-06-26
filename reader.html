@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cầu Đạo - Đọc truyện</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/reader.css">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-inner">
+      <nav class="breadcrumb" id="breadcrumb">
+        <a href="index.html">Trang chủ</a>
+        <span class="bc-sep">&#x203A;</span>
+        <a href="detail.html" class="bc-novel">Cầu Đạo</a>
+        <span class="bc-sep">&#x203A;</span>
+        <span class="bc-chapter" id="bcChapter">Chương ...</span>
+      </nav>
+      <button id="chapteSelectBtn" title="Danh sách chương">
+        <iconify-icon icon="heroicons:bars-3-20-solid" width="18" height="18"></iconify-icon>
+        <span id="chapterSelectText">Danh mục</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="chapter-overlay" id="chapterOverlay">
+  <div class="chapter-panel">
+    <div class="chapter-panel-header">
+      <span class="title">Danh sách chương</span>
+      <button class="chapter-panel-close" id="chapterPanelClose">&times;</button>
+    </div>
+    <div class="chapter-list" id="chapterList"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="loading">
+    <div class="spinner"></div>
+    Đang tải chương...
+  </div>
+
+  <div class="content-wrapper" id="contentWrapper" style="display:none;">
+    <div class="chapter-header">
+      <div class="chapter-title-decor">&bull; Chương &bull;</div>
+      <h1 class="chapter-title" id="chapterTitle"></h1>
+    </div>
+
+    <div class="chapter-body" id="chapterBody"></div>
+
+    <div class="spacer-decor" id="spacerDecor">&mdash; &lowast; &lowast; &lowast; &mdash;</div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="btn-nav" id="btnPrev" disabled>
+      <iconify-icon icon="heroicons:chevron-left-20-solid" width="20" height="20"></iconify-icon>
+      <span class="label">
+        <span>Trước</span>
+        <span class="sublabel">Chương trước</span>
+      </span>
+    </button>
+
+    <div class="chapter-indicator">
+      <span>Chương</span>
+      <strong id="chapterCurrent">1</strong>
+      <span>/</span>
+      <span id="chapterTotal">1</span>
+    </div>
+
+    <button class="btn-nav" id="btnNext" disabled>
+      <iconify-icon icon="heroicons:chevron-right-20-solid" width="20" height="20"></iconify-icon>
+      <span class="label">
+        <span>Sau</span>
+        <span class="sublabel">Chương sau</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<script src="assets/js/reader.js"></script>
+</body>
+</html>
