@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tủ sách - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root{--bg-deep:#08080f;--bg-panel:#0f0f1a;--bg-card:#151528;--bg-card-hover:#1b1b38;--gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;--text-primary:#d8d4c8;--text-secondary:#8a8780;--text-title:#e8dcc8;--accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);--border-glow:rgba(201,160,80,0.4);--shadow-gold:0 0 20px rgba(201,160,80,0.1);--star-active:#e8b730;--transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg-deep);color:var(--text-primary);font-family:"Lora","Georgia","Times New Roman","Noto Serif",serif;min-height:100vh;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,80,0.04) 0%,transparent 55%),radial-gradient(ellipse at 30% 100%,rgba(160,90,40,0.03) 0%,transparent 50%);}
+    .container{max-width:1000px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+    .top-bar{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg-deep) 80%,transparent);padding:18px 0 10px;backdrop-filter:blur(12px);}
+    .top-inner{display:flex;align-items:center;gap:16px;}
+    .back-link{display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--text-secondary);font-size:0.85rem;transition:color var(--transition-smooth);flex-shrink:0;}
+    .back-link:hover{color:var(--gold);}
+    .page-title{font-family:"Playfair Display","Lora",serif;font-size:1.25rem;font-weight:700;color:var(--gold);text-shadow:0 0 12px var(--accent-glow);}
+
+    .profile-card{display:flex;align-items:center;gap:20px;background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:14px;padding:24px;margin:18px 0;}
+    .avatar{width:72px;height:72px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1525,#2a1f3d);border:2px solid var(--border-glow);font-family:"Playfair Display",serif;font-size:1.8rem;color:var(--gold-light);text-shadow:0 0 10px var(--accent-glow);}
+    .profile-info{flex:1;min-width:0;}
+    .profile-name{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:var(--text-title);margin-bottom:6px;}
+    .profile-stats{display:flex;gap:20px;flex-wrap:wrap;font-size:0.82rem;color:var(--text-secondary);}
+    .profile-stats .stat{display:flex;align-items:center;gap:5px;}
+    .profile-stats .stat strong{color:var(--gold-light);}
+
+    .tab-bar{display:flex;gap:4px;padding:4px 0 18px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
+    .tab-bar::-webkit-scrollbar{display:none;}
+    .tab-btn{display:flex;align-items:center;gap:5px;padding:8px 18px;border-radius:99px;background:none;border:1px solid var(--border-subtle);color:var(--text-secondary);font-family:inherit;font-size:0.85rem;cursor:pointer;white-space:nowrap;transition:all var(--transition-smooth);flex-shrink:0;}
+    .tab-btn:hover{border-color:var(--border-glow);color:var(--text-primary);}
+    .tab-btn.active{background:rgba(201,160,80,0.1);border-color:var(--border-glow);color:var(--gold);font-weight:600;}
+
+    .shelf-list{display:flex;flex-direction:column;gap:12px;padding-bottom:60px;}
+    .shelf-card{display:flex;gap:16px;background:var(--bg-panel);border:1px solid var(--border-subtle);border-radius:12px;padding:14px;text-decoration:none;color:inherit;transition:all var(--transition-smooth);cursor:pointer;}
+    .shelf-card:hover{border-color:var(--border-glow);transform:translateX(4px);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+    .shelf-cover{width:70px;height:98px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid var(--border-subtle);}
+    .shelf-cover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 40% 30%,rgba(201,160,80,0.12) 0%,transparent 50%);}
+    .shelf-cover .cv{position:relative;z-index:1;font-family:"Playfair Display",serif;font-size:1.3rem;color:var(--gold-light);font-weight:700;text-shadow:0 0 8px var(--accent-glow);}
+    .shelf-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;}
+    .shelf-title{font-family:"Playfair Display","Lora",serif;font-size:0.95rem;font-weight:700;color:var(--text-title);}
+    .shelf-meta{font-size:0.75rem;color:var(--text-secondary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .shelf-meta .author{color:var(--gold-light);font-weight:500;}
+    .shelf-rating{display:flex;align-items:center;gap:3px;color:var(--star-active);font-weight:600;font-size:0.8rem;}
+    .shelf-rating iconify-icon{width:12px;height:12px;}
+    .progress-wrap{display:flex;align-items:center;gap:10px;margin-top:2px;}
+    .progress-bar{flex:1;height:6px;background:rgba(201,160,80,0.08);border-radius:3px;overflow:hidden;}
+    .progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--gold-light));transition:width 0.6s;}
+    .progress-text{font-size:0.72rem;color:var(--gold-dim);white-space:nowrap;min-width:52px;text-align:right;}
+    .shelf-cta{display:flex;align-items:center;gap:4px;color:var(--gold);font-size:0.8rem;font-weight:600;margin-top:2px;}
+    .shelf-cta iconify-icon{transition:transform var(--transition-smooth);}
+    .shelf-card:hover .shelf-cta iconify-icon{transform:translateX(3px);}
+    .shelf-time{font-size:0.7rem;color:var(--text-secondary);}
+    .shelf-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+    .shelf-action{background:none;border:none;color:var(--text-secondary);cursor:pointer;padding:4px;border-radius:4px;transition:color var(--transition-smooth);}
+    .shelf-action:hover{color:var(--danger,#e85353);}
+
+    .empty-shelf{text-align:center;padding:80px 0;color:var(--text-secondary);}
+    .empty-shelf iconify-icon{margin-bottom:12px;opacity:0.2;}
+    .empty-shelf a{color:var(--gold-light);font-weight:600;text-decoration:none;}
+
+    .footer{text-align:center;padding:30px 0;border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.8rem;}
+
+    @media(max-width:640px){
+      .container{padding:0 14px;}
+      .profile-card{padding:16px;gap:14px;}
+      .avatar{width:56px;height:56px;font-size:1.4rem;}
+      .shelf-card{padding:10px;gap:10px;}
+      .shelf-cover{width:55px;height:78px;}
+      .shelf-title{font-size:0.85rem;}
+      .shelf-actions{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title">Tủ sách của tôi</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── Profile ── -->
+  <div class="profile-card">
+    <div class="avatar" id="userAvatar">ĐL</div>
+    <div class="profile-info">
+      <div class="profile-name">Đạo Hữu Lữ Khách</div>
+      <div class="profile-stats">
+        <span class="stat"><iconify-icon icon="heroicons:book-open-20-solid" width="14" height="14" style="color:var(--gold-dim)"></iconify-icon> <strong id="statReading">0</strong> đang đọc</span>
+        <span class="stat"><iconify-icon icon="heroicons:bookmark-20-solid" width="14" height="14" style="color:var(--gold-dim)"></iconify-icon> <strong id="statSaved">0</strong> đã lưu</span>
+        <span class="stat"><iconify-icon icon="heroicons:clock-20-solid" width="14" height="14" style="color:var(--gold-dim)"></iconify-icon> <strong id="statHistory">0</strong> lịch sử</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Tabs ── -->
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-tab="reading">
+      <iconify-icon icon="heroicons:book-open-20-solid" width="16" height="16"></iconify-icon>
+      Đang đọc
+    </button>
+    <button class="tab-btn" data-tab="saved">
+      <iconify-icon icon="heroicons:bookmark-20-solid" width="16" height="16"></iconify-icon>
+      Đã lưu
+    </button>
+    <button class="tab-btn" data-tab="history">
+      <iconify-icon icon="heroicons:clock-20-solid" width="16" height="16"></iconify-icon>
+      Lịch sử
+    </button>
+  </div>
+
+  <div class="shelf-list" id="shelfList"></div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Tủ sách cá nhân
+</footer>
+
+<script src="assets/js/library.js"></script>
+</body>
+</html>
