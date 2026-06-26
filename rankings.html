@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Xếp Hạng - Thư Viện Tiên Đạo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root {
+      --bg-deep:#08080f;--bg-panel:#0f0f1a;--bg-card:#151528;--bg-card-hover:#1b1b38;
+      --gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;
+      --text-primary:#d8d4c8;--text-secondary:#8a8780;--text-title:#e8dcc8;
+      --accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);
+      --border-glow:rgba(201,160,80,0.4);--star-active:#e8b730;--star-inactive:#3a3530;
+      --shadow-gold:0 0 20px rgba(201,160,80,0.1);
+      --transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:var(--bg-deep);color:var(--text-primary);
+      font-family:"Lora","Georgia","Times New Roman","Noto Serif",serif;
+      min-height:100vh;line-height:1.6;overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(201,160,80,0.04) 0%,transparent 55%),radial-gradient(ellipse at 30% 100%,rgba(160,90,40,0.03) 0%,transparent 50%);}
+    .container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+    .top-bar{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--bg-deep) 80%,transparent);padding:18px 0 10px;backdrop-filter:blur(12px);}
+    .top-inner{display:flex;align-items:center;gap:16px;}
+    .back-link{display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--text-secondary);font-size:0.85rem;font-weight:500;transition:color var(--transition-smooth);flex-shrink:0;}
+    .back-link:hover{color:var(--gold);}
+    .page-title{font-family:"Playfair Display","Lora","Georgia",serif;font-size:1.25rem;font-weight:700;color:var(--gold);letter-spacing:0.03em;text-shadow:0 0 12px var(--accent-glow);}
+
+    .tab-bar{display:flex;gap:4px;padding:16px 0 8px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;}
+    .tab-bar::-webkit-scrollbar{display:none;}
+    .tab-btn{display:flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;background:none;border:1px solid var(--border-subtle);color:var(--text-secondary);font-family:inherit;font-size:0.88rem;cursor:pointer;white-space:nowrap;transition:all var(--transition-smooth);flex-shrink:0;}
+    .tab-btn:hover{border-color:var(--border-glow);color:var(--text-primary);}
+    .tab-btn.active{background:rgba(201,160,80,0.1);border-color:var(--border-glow);color:var(--gold);font-weight:600;box-shadow:0 0 12px var(--accent-glow);}
+    .tab-btn iconify-icon{flex-shrink:0;}
+
+    .rank-list{padding:8px 0 60px;}
+    .rank-row{display:flex;align-items:center;gap:16px;padding:14px 16px;text-decoration:none;color:inherit;border-bottom:1px solid rgba(201,160,80,0.04);transition:all var(--transition-smooth);border-radius:10px;}
+    .rank-row:hover{background:var(--bg-card-hover);transform:translateX(4px);}
+    .rank-pos{width:40px;text-align:center;flex-shrink:0;font-size:1rem;font-weight:800;color:var(--text-secondary);}
+    .rank-row:nth-child(1) .rank-pos{color:#f0c040;font-size:1.3rem;}
+    .rank-row:nth-child(2) .rank-pos{color:#b0b8c8;font-size:1.2rem;}
+    .rank-row:nth-child(3) .rank-pos{color:#c88440;font-size:1.15rem;}
+    .rank-medal{font-size:1.2rem;}
+    .rank-row:nth-child(1) .rank-pos::before{content:"🥇";font-size:1.4rem;display:block;}
+    .rank-row:nth-child(2) .rank-pos::before{content:"🥈";font-size:1.3rem;display:block;}
+    .rank-row:nth-child(3) .rank-pos::before{content:"🥉";font-size:1.2rem;display:block;}
+    .rank-row:nth-child(1) .rank-num-text,.rank-row:nth-child(2) .rank-num-text,.rank-row:nth-child(3) .rank-num-text{display:none;}
+    .rank-num-text{font-size:1rem;}
+
+    .rank-cover{width:56px;height:78px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid var(--border-subtle);}
+    .rank-cover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 40% 30%,rgba(201,160,80,0.12) 0%,transparent 50%);}
+    .rank-cover .cv{position:relative;z-index:1;font-family:"Playfair Display",serif;font-size:1.1rem;color:var(--gold-light);text-shadow:0 0 8px var(--accent-glow);font-weight:700;}
+
+    .rank-info{flex:1;min-width:0;}
+    .rank-title{font-family:"Playfair Display","Lora",serif;font-size:0.95rem;font-weight:700;color:var(--text-title);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .rank-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.75rem;color:var(--text-secondary);margin-top:3px;}
+    .rank-meta .author{color:var(--gold-light);font-weight:500;}
+    .rank-tags{display:flex;gap:4px;margin-top:3px;}
+    .rank-tags .tag{font-size:0.65rem;padding:1px 7px;border-radius:99px;border:1px solid var(--border-subtle);color:var(--gold-dim);}
+
+    .rank-rating{display:flex;align-items:center;gap:3px;font-size:0.85rem;font-weight:700;color:var(--star-active);flex-shrink:0;min-width:50px;justify-content:flex-end;}
+    .rank-rating iconify-icon{width:13px;height:13px;}
+
+    .rank-views{font-size:0.78rem;color:var(--text-secondary);flex-shrink:0;min-width:55px;text-align:right;}
+    .rank-ch{font-size:0.72rem;color:var(--gold-dim);flex-shrink:0;min-width:50px;text-align:right;}
+
+    .rank-change{font-size:0.7rem;flex-shrink:0;min-width:40px;text-align:center;font-weight:600;}
+    .rank-change.up{color:#4ade80;}
+    .rank-change.down{color:#f87171;}
+    .rank-change.same{color:var(--text-secondary);}
+
+    .footer{text-align:center;padding:30px 0;border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:0.8rem;}
+
+    @media(max-width:640px){
+      .container{padding:0 12px;}
+      .rank-row{gap:10px;padding:10px 8px;}
+      .rank-pos{width:28px;font-size:0.85rem;}
+      .rank-cover{width:42px;height:60px;}
+      .rank-cover .cv{font-size:0.85rem;}
+      .rank-title{font-size:0.82rem;}
+      .rank-meta{font-size:0.68rem;gap:6px;}
+      .rank-views,.rank-ch{display:none;}
+      .rank-rating{font-size:0.75rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="top-inner">
+      <a href="index.html" class="back-link">
+        <iconify-icon icon="heroicons:chevron-left-20-solid" width="16" height="16"></iconify-icon>
+        Thư viện
+      </a>
+      <h1 class="page-title">Bảng Xếp Hạng</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" data-tab="trending">
+      <iconify-icon icon="heroicons:fire-20-solid" width="16" height="16"></iconify-icon>
+      Thịnh hành
+    </button>
+    <button class="tab-btn" data-tab="recommend">
+      <iconify-icon icon="heroicons:star-20-solid" width="16" height="16"></iconify-icon>
+      Đề cử
+    </button>
+    <button class="tab-btn" data-tab="views">
+      <iconify-icon icon="heroicons:eye-20-solid" width="16" height="16"></iconify-icon>
+      Lượt đọc
+    </button>
+    <button class="tab-btn" data-tab="completed">
+      <iconify-icon icon="heroicons:check-badge-20-solid" width="16" height="16"></iconify-icon>
+      Hoàn thành
+    </button>
+    <button class="tab-btn" data-tab="chapters">
+      <iconify-icon icon="heroicons:book-open-20-solid" width="16" height="16"></iconify-icon>
+      Số chương
+    </button>
+  </div>
+
+  <div class="rank-list" id="rankList"></div>
+
+</div>
+
+<footer class="footer">
+  &copy; 2024 Thư Viện Tiên Đạo &mdash; Đọc truyện online miễn phí
+</footer>
+
+<script src="assets/js/rankings.js"></script>
+</body>
+</html>
