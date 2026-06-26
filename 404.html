@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Không tìm thấy trang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <style>
+    :root{--bg-deep:#08080f;--gold:#c9a050;--gold-light:#e0c87c;--gold-dim:#8a6d3b;--text-primary:#d8d4c8;--text-secondary:#8a8780;--accent-glow:rgba(201,160,80,0.25);--border-subtle:rgba(201,160,80,0.12);--border-glow:rgba(201,160,80,0.4);--transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg-deep);color:var(--text-primary);font-family:"Lora","Georgia","Times New Roman",serif;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;-webkit-font-smoothing:antialiased;}
+
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(201,160,80,0.06) 0%,transparent 60%),radial-gradient(circle at 50% 90%,rgba(160,90,40,0.04) 0%,transparent 40%);}
+
+    .error-wrap{position:relative;z-index:1;padding:24px;max-width:560px;}
+
+    .error-num{font-family:"Playfair Display",serif;font-size:9rem;font-weight:800;color:var(--gold);line-height:1;text-shadow:0 0 60px var(--accent-glow),0 0 120px var(--accent-glow);animation:glow 3s ease-in-out infinite;}
+    @keyframes glow{0%,100%{text-shadow:0 0 60px var(--accent-glow);}50%{text-shadow:0 0 100px var(--accent-glow),0 0 180px rgba(201,160,80,0.35);}}
+
+    .decor-line{width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:20px auto 24px;}
+
+    .error-msg{font-size:1.05rem;color:var(--text-secondary);line-height:1.8;margin-bottom:8px;}
+    .error-sub{font-size:0.85rem;color:var(--gold-dim);margin-bottom:36px;}
+
+    .btn-group{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 24px;border-radius:10px;font-family:"Playfair Display","Lora",serif;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all var(--transition-smooth);cursor:pointer;}
+    .btn-primary{background:linear-gradient(135deg,var(--gold-dim),var(--gold),var(--gold-dim));border:none;color:#0a0a0f;}
+    .btn-primary:hover{box-shadow:0 0 24px var(--accent-glow);transform:translateY(-1px);filter:brightness(1.1);}
+    .btn-outline{background:none;border:1px solid var(--border-subtle);color:var(--text-primary);}
+    .btn-outline:hover{border-color:var(--border-glow);color:var(--gold);background:rgba(201,160,80,0.05);}
+
+    .cloud{position:fixed;z-index:0;pointer-events:none;opacity:0.04;font-size:6rem;}
+    .cloud:nth-child(1){top:10%;left:5%;animation:float 8s ease-in-out infinite;}
+    .cloud:nth-child(2){top:60%;right:8%;animation:float 10s ease-in-out infinite reverse;font-size:4rem;}
+    .cloud:nth-child(3){bottom:15%;left:15%;animation:float 7s ease-in-out infinite;font-size:3rem;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+
+    @media(max-width:480px){
+      .error-num{font-size:5.5rem;}
+      .error-msg{font-size:0.9rem;}
+    }
+  </style>
+</head>
+<body>
+
+<span class="cloud">☁</span>
+<span class="cloud">☁</span>
+<span class="cloud">☁</span>
+
+<div class="error-wrap">
+  <div class="error-num">404</div>
+  <div class="decor-line"></div>
+  <p class="error-msg">Trang này đã bị phong ấn, hoặc chưa từng tồn tại giữa thiên địa này.</p>
+  <p class="error-sub">Có lẽ đạo hữu đã lạc bước giữa vạn cổ trường sinh...</p>
+
+  <div class="btn-group">
+    <a href="index.html" class="btn btn-primary">
+      <iconify-icon icon="heroicons:home-20-solid" width="16" height="16"></iconify-icon>
+      Về trang chủ
+    </a>
+    <a href="search.html" class="btn btn-outline">
+      <iconify-icon icon="heroicons:magnifying-glass-20-solid" width="16" height="16"></iconify-icon>
+      Tìm truyện
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
