@@ -74,7 +74,8 @@
   <header class="admin-header">
     <iconify-icon icon="heroicons:cog-8-tooth-20-solid"></iconify-icon>
     <span class="admin-title">Quản lý truyện</span>
-    <a href="index.html" class="btn-back"><iconify-icon icon="heroicons:arrow-left-20-solid" width="16" height="16"></iconify-icon> Về trang chủ</a>
+    <a href="index.html" class="btn-back" id="btnHome"><iconify-icon icon="heroicons:arrow-left-20-solid" width="16" height="16"></iconify-icon> Về trang chủ</a>
+    <a href="index.html" class="btn-back" style="color:var(--gold);border-color:var(--border-glow)" onclick="localStorage.setItem('truyen_reload_flag','1')"><iconify-icon icon="heroicons:arrow-path-20-solid" width="16" height="16"></iconify-icon> Về &amp; tải lại</a>
     <button class="btn btn-secondary btn-back" id="btnLogout" style="margin-left:auto"><iconify-icon icon="heroicons:arrow-right-start-on-rectangle-20-solid" width="16" height="16"></iconify-icon> Đăng xuất</button>
   </header>
 
@@ -324,7 +325,7 @@
     for (var j = 0; j < chips.length; j++) chips[j].remove();
 
     renderExtraList();
-    showToast("Đã thêm \"" + novel.title + "\". Tải lại trang chủ để thấy truyện mới!", "success");
+    showToast("Đã thêm \"" + novel.title + "\"! <a href=\"index.html\" style=\"color:#4ade80\">Về trang chủ</a>", "success");
   });
 
   function checkAuth() {

@@ -1,15 +1,18 @@
 #!/usr/bin/env pwsh
 param()
 
-$filesDir = Join-Path $PSScriptRoot ".." "files"
+$filesDir = Resolve-Path (Join-Path $PSScriptRoot ".." "files")
 if (-not (Test-Path $filesDir -PathType Container)) {
     Write-Error "Không tìm thấy thư mục assets/files/"
     exit 1
 }
 
-$txtFiles = Get-ChildItem -Path $filesDir -Recurse -Filter "*.txt" | Sort-Object FullName | ForEach-Object {
-    $_.FullName.Replace($filesDir, "").TrimStart("\", "/").Replace("\", "/")
-}
+$txtFiles = Get-ChildItem -Path $filesDir -Directory | ForEach-Object {
+    $folder = $_.Name
+    Get-ChildItem -Path $_.FullName -Filter "*.txt" | Sort-Object Name | ForEach-Object {
+        "$folder/$($_.Name)"
+    }
+} | Sort-Object
 
 $json = ConvertTo-Json -InputObject @($txtFiles) -Compress
 $outPath = Join-Path $filesDir "chapters.json"

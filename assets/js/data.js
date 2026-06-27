@@ -1,8 +1,9 @@
 window.NovelsData = (function () {
 
-var loaded = false;
 var novels = [];
 var callbacks = [];
+var initializing = false;
+var ready = false;
 
 function httpGet(url, cb) {
   var xhr = new XMLHttpRequest();
@@ -47,9 +48,14 @@ function normalize(arr) {
   });
 }
 
-function init() {
-  if (loaded) return;
-  loaded = true;
+function fireCallbacks() {
+  for (var i = 0; i < callbacks.length; i++) callbacks[i](novels);
+  callbacks = [];
+}
+
+function doInit() {
+  if (initializing) return;
+  initializing = true;
   httpGet("assets/data/novels.json", function (err, data) {
     var base = [];
     if (!err) {
@@ -57,16 +63,27 @@ function init() {
     }
     var extras = loadExtras();
     novels = normalize(base.concat(extras));
-    for (var i = 0; i < callbacks.length; i++) callbacks[i](novels);
-    callbacks = [];
+    ready = true;
+    initializing = false;
+    fireCallbacks();
   });
 }
 
 function onReady(fn) {
-  if (loaded && novels.length) { fn(novels); return; }
+  if (ready) { fn(novels); return; }
   callbacks.push(fn);
-  if (!loaded) init();
+  if (!initializing) doInit();
 }
+
+window.addEventListener("pageshow", function (e) {
+  if (e.persisted) {
+    ready = false;
+    initializing = false;
+    callbacks = [];
+    novels = [];
+    doInit();
+  }
+});
 
 function saveExtras(arr) {
   localStorage.setItem("truyen_extra_novels", JSON.stringify(arr));
@@ -82,7 +99,6 @@ function addNovel(info, cb) {
   newNovel.slug = newNovel.slug || (newNovel.title ? newNovel.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") : "novel-" + Date.now());
   extras.push(newNovel);
   saveExtras(extras);
-  novels = normalize(novels.concat([newNovel]));
   if (cb) cb(newNovel);
   return newNovel;
 }
@@ -107,7 +123,8 @@ return {
   addNovel: addNovel,
   removeNovel: removeNovel,
   findBySlug: findBySlug,
-  getAll: function () { return novels; }
+  getAll: function () { return novels; },
+  reload: function () { ready = false; initializing = false; callbacks = []; novels = []; doInit(); }
 };
 
 })();

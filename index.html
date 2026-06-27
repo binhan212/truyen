@@ -169,6 +169,9 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/homepage.js"></script>
 <script>
+if(localStorage.getItem("truyen_reload_flag")==="1"){localStorage.removeItem("truyen_reload_flag");NovelsData.reload();}
+</script>
+<script>
 (function(){
   var searchInput=document.getElementById("searchInput");
   var searchBox=document.getElementById("searchBox");
