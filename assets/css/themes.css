@@ -1,0 +1,187 @@
+/* ══════════════════════════════════════════
+   Theme System — Thư Viện Tiên Đạo
+   Apply via <html data-theme="...">
+   ══════════════════════════════════════════ */
+
+/* ── Default: Tiên Đạo (Gold/Amber) ── */
+:root {
+  --bg:#0a0a12;--bg-card:#12121c;--bg-panel:#181825;
+  --text-primary:#e8e6e3;--text-secondary:#9d9ba8;
+  --accent:#c9a050;--accent-light:#deb870;--accent-dim:#8a6d3b;
+  --accent-glow:rgba(201,160,80,0.25);
+  --border-subtle:rgba(255,255,255,0.06);
+  --border-glow:rgba(201,160,80,0.25);
+  --star-active:#f0b90b;
+  --danger:#e85353;--success:#4ade80;
+  --transition-smooth:0.3s cubic-bezier(0.4,0,0.2,1);
+  --surface-glass:rgba(18,18,28,0.85);
+  --overlay:rgba(0,0,0,0.7);
+}
+
+/* ── Kỳ Ảo (Fantasy/Mystical Purple) ── */
+[data-theme="kyao"] {
+  --bg:#0e0a18;--bg-card:#161126;--bg-panel:#1d1633;
+  --text-primary:#e6e0f0;--text-secondary:#a098b8;
+  --accent:#9b6dd4;--accent-light:#b892e8;--accent-dim:#5e3d82;
+  --accent-glow:rgba(155,109,212,0.25);
+  --border-subtle:rgba(155,109,212,0.08);
+  --border-glow:rgba(155,109,212,0.3);
+  --star-active:#c99df2;
+  --danger:#e85353;--success:#4ade80;
+  --surface-glass:rgba(22,17,38,0.85);
+  --overlay:rgba(0,0,0,0.75);
+}
+
+/* ── Đô Thị (Urban/Modern Blue) ── */
+[data-theme="dothi"] {
+  --bg:#0a0f18;--bg-card:#111826;--bg-panel:#182033;
+  --text-primary:#e0e4ec;--text-secondary:#8896a8;
+  --accent:#5b9bd5;--accent-light:#7bb5e8;--accent-dim:#35638a;
+  --accent-glow:rgba(91,155,213,0.2);
+  --border-subtle:rgba(91,155,213,0.07);
+  --border-glow:rgba(91,155,213,0.25);
+  --star-active:#5bc0eb;
+  --danger:#e85353;--success:#4ade80;
+  --surface-glass:rgba(17,24,38,0.85);
+  --overlay:rgba(0,0,0,0.72);
+}
+
+/* ── Võ Hiệp (Martial/Battle Crimson) ── */
+[data-theme="vohiep"] {
+  --bg:#120a0a;--bg-card:#1c1212;--bg-panel:#251818;
+  --text-primary:#ede0e0;--text-secondary:#a89090;
+  --accent:#d45353;--accent-light:#e87272;--accent-dim:#823535;
+  --accent-glow:rgba(212,83,83,0.22);
+  --border-subtle:rgba(212,83,83,0.07);
+  --border-glow:rgba(212,83,83,0.25);
+  --star-active:#f05050;
+  --danger:#ff5555;--success:#4ade80;
+  --surface-glass:rgba(28,18,18,0.85);
+  --overlay:rgba(0,0,0,0.72);
+}
+
+/* ── Huyền Huyễn (Xuanhuan/Jade Green) ── */
+[data-theme="huyenhuyen"] {
+  --bg:#0a140f;--bg-card:#0f1c17;--bg-panel:#182820;
+  --text-primary:#dae8df;--text-secondary:#7fa08a;
+  --accent:#4da86a;--accent-light:#6cc885;--accent-dim:#2d6b41;
+  --accent-glow:rgba(77,168,106,0.22);
+  --border-subtle:rgba(77,168,106,0.07);
+  --border-glow:rgba(77,168,106,0.25);
+  --star-active:#5edb80;
+  --danger:#e85353;--success:#5adb80;
+  --surface-glass:rgba(15,28,23,0.85);
+  --overlay:rgba(0,0,0,0.72);
+}
+
+/* ── Ngôn Tình (Romance/Rose Pink) ── */
+[data-theme="ngontinh"] {
+  --bg:#150a10;--bg-card:#1f121a;--bg-panel:#2a1822;
+  --text-primary:#f0e0e8;--text-secondary:#b890a0;
+  --accent:#d4669a;--accent-light:#e888b0;--accent-dim:#82385a;
+  --accent-glow:rgba(212,102,154,0.22);
+  --border-subtle:rgba(212,102,154,0.07);
+  --border-glow:rgba(212,102,154,0.25);
+  --star-active:#f088b0;
+  --danger:#e85353;--success:#4ade80;
+  --surface-glass:rgba(31,18,26,0.85);
+  --overlay:rgba(0,0,0,0.72);
+}
+
+/* ── Linh Dị (Horror/Ghostly Silver) ── */
+[data-theme="linhdi"] {
+  --bg:#0a0a0a;--bg-card:#141414;--bg-panel:#1c1c1c;
+  --text-primary:#d0d0d0;--text-secondary:#707070;
+  --accent:#888888;--accent-light:#aaaaaa;--accent-dim:#444444;
+  --accent-glow:rgba(150,150,150,0.15);
+  --border-subtle:rgba(255,255,255,0.04);
+  --border-glow:rgba(180,180,180,0.15);
+  --star-active:#cccccc;
+  --danger:#cc4444;--success:#4ade80;
+  --surface-glass:rgba(20,20,20,0.85);
+  --overlay:rgba(0,0,0,0.8);
+}
+
+/* ── Khoa Huyễn (Sci-Fi/Neon Cyan) ── */
+[data-theme="khoahuyen"] {
+  --bg:#081018;--bg-card:#0e1826;--bg-panel:#152233;
+  --text-primary:#d0e8f0;--text-secondary:#6a8a9a;
+  --accent:#38b2b8;--accent-light:#5ad4da;--accent-dim:#1e7075;
+  --accent-glow:rgba(56,178,184,0.25);
+  --border-subtle:rgba(56,178,184,0.08);
+  --border-glow:rgba(56,178,184,0.28);
+  --star-active:#50e8ee;
+  --danger:#e85353;--success:#4ade80;
+  --surface-glass:rgba(14,24,38,0.85);
+  --overlay:rgba(0,0,0,0.75);
+}
+
+/* ── Hài Hước (Comedy/Warm Orange) ── */
+[data-theme="haihuoc"] {
+  --bg:#14100a;--bg-card:#1e1812;--bg-panel:#282018;
+  --text-primary:#eee0d0;--text-secondary:#a09080;
+  --accent:#e08840;--accent-light:#f0a860;--accent-dim:#905828;
+  --accent-glow:rgba(224,136,64,0.25);
+  --border-subtle:rgba(224,136,64,0.08);
+  --border-glow:rgba(224,136,64,0.25);
+  --star-active:#f0a030;
+  --danger:#e85353;--success:#4ade80;
+  --surface-glass:rgba(30,24,18,0.85);
+  --overlay:rgba(0,0,0,0.7);
+}
+
+/* ── Map old variable names to new ── */
+:root,
+[data-theme] {
+  --gold:var(--accent);
+  --gold-light:var(--accent-light);
+  --gold-dim:var(--accent-dim);
+}
+
+/* ── Theme Switcher Widget ── */
+.theme-btn {
+  display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:10px;
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  color:var(--text-secondary);cursor:pointer;flex-shrink:0;
+  transition:all var(--transition-smooth);
+}
+.theme-btn:hover { border-color:var(--border-glow);color:var(--accent); }
+
+.theme-panel {
+  position:fixed;top:56px;right:12px;z-index:300;
+  width:280px;max-height:70vh;overflow-y:auto;
+  background:var(--bg-panel);border:1px solid var(--border-subtle);
+  border-radius:14px;padding:10px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.6);
+  opacity:0;pointer-events:none;
+  transform:translateY(-8px) scale(0.96);
+  transition:all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.theme-panel.show { opacity:1;pointer-events:auto;transform:translateY(0) scale(1); }
+
+.theme-panel-title {
+  font-family:"Playfair Display",serif;font-size:0.95rem;
+  color:var(--accent);padding:8px 12px 10px;
+  border-bottom:1px solid var(--border-subtle);margin-bottom:8px;
+}
+
+.theme-grid { display:grid;grid-template-columns:1fr 1fr;gap:6px; }
+
+.theme-option {
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:12px 6px;border-radius:10px;
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  color:var(--text-primary);font-family:inherit;cursor:pointer;
+  transition:all var(--transition-smooth);text-align:center;
+}
+.theme-option:hover { border-color:var(--border-glow);background:rgba(201,160,80,0.05); }
+.theme-option.active { border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow); }
+
+.theme-option iconify-icon { color:var(--accent); }
+.theme-option-name { font-size:0.78rem;font-weight:600; }
+.theme-option-desc { font-size:0.65rem;color:var(--text-secondary); }
+
+@media(max-width:640px) {
+  .theme-panel { left:8px;right:8px;width:auto; }
+}

@@ -55,6 +55,7 @@
       .notif-icon{width:36px;height:36px;}
     }
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
 
@@ -67,6 +68,7 @@
       </a>
       <h1 class="page-title">Thông báo</h1>
       <button class="mark-all-btn" id="markAllBtn">Đánh dấu đã đọc</button>
+      <span id="themeBtnSlot"></span>
     </div>
   </div>
 </div>
@@ -87,6 +89,8 @@
   &copy; 2024 Thư Viện Tiên Đạo &mdash; Trung tâm thông báo
 </footer>
 
+<script src="assets/js/themes.js"></script>
 <script src="assets/js/notifications.js"></script>
+<script>ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));</script>
 </body>
 </html>

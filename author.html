@@ -67,6 +67,7 @@
       .work-cover .cv{font-size:1.1rem;}
     }
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
 
@@ -78,6 +79,7 @@
         Thư viện
       </a>
       <h1 class="page-title">Tác giả</h1>
+      <span id="themeBtnSlot"></span>
     </div>
   </div>
 </div>
@@ -94,6 +96,8 @@
   &copy; 2024 Thư Viện Tiên Đạo &mdash; Đọc truyện online miễn phí
 </footer>
 
+<script src="assets/js/themes.js"></script>
 <script src="assets/js/author.js"></script>
+<script>ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));</script>
 </body>
 </html>

@@ -75,6 +75,7 @@
       .shelf-actions{display:none;}
     }
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
 
@@ -86,6 +87,7 @@
         Thư viện
       </a>
       <h1 class="page-title">Tủ sách của tôi</h1>
+      <span id="themeBtnSlot"></span>
     </div>
   </div>
 </div>
@@ -130,6 +132,10 @@
 </footer>
 
 <script src="assets/js/auth.js"></script>
+<script src="assets/js/themes.js"></script>
 <script src="assets/js/library.js"></script>
+<script>
+  ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));
+</script>
 </body>
 </html>

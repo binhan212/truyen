@@ -59,6 +59,7 @@
       .dl-btn{min-width:140px;padding:12px 18px;}
     }
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
 
@@ -70,6 +71,7 @@
         Thư viện
       </a>
       <h1 class="page-title">Tải ứng dụng</h1>
+      <span id="themeBtnSlot"></span>
     </div>
   </div>
 </div>
@@ -140,5 +142,7 @@
   &copy; 2024 Thư Viện Tiên Đạo &mdash; Ứng dụng đọc truyện
 </footer>
 
+<script src="assets/js/themes.js"></script>
+<script>ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));</script>
 </body>
 </html>

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/list.css">
+  <link rel="stylesheet" href="assets/css/themes.css">
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 </head>
 <body>
@@ -20,6 +21,7 @@
         Thư viện
       </a>
       <h1 class="page-title" id="pageTitle">Danh sách truyện</h1>
+      <span id="themeBtnSlot"></span>
       <span class="result-count" id="resultCount"></span>
     </div>
   </div>
@@ -91,6 +93,8 @@
 </footer>
 
   <script src="assets/js/data.js"></script>
+  <script src="assets/js/themes.js"></script>
   <script src="assets/js/list.js"></script>
+  <script>ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));</script>
 </body>
 </html>

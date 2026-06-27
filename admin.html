@@ -66,6 +66,7 @@
     .login-wall{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px}
     .login-wall input{max-width:280px}
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
 
@@ -74,6 +75,7 @@
   <header class="admin-header">
     <iconify-icon icon="heroicons:cog-8-tooth-20-solid"></iconify-icon>
     <span class="admin-title">Quản lý truyện</span>
+    <span id="themeBtnSlot"></span>
     <a href="index.html" class="btn-back" id="btnHome"><iconify-icon icon="heroicons:arrow-left-20-solid" width="16" height="16"></iconify-icon> Về trang chủ</a>
     <a href="index.html" class="btn-back" style="color:var(--gold);border-color:var(--border-glow)" onclick="localStorage.setItem('truyen_reload_flag','1')"><iconify-icon icon="heroicons:arrow-path-20-solid" width="16" height="16"></iconify-icon> Về &amp; tải lại</a>
     <button class="btn btn-secondary btn-back" id="btnLogout" style="margin-left:auto"><iconify-icon icon="heroicons:arrow-right-start-on-rectangle-20-solid" width="16" height="16"></iconify-icon> Đăng xuất</button>
@@ -183,6 +185,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="assets/js/auth.js"></script>
+<script src="assets/js/themes.js"></script>
 <script>
 (function () {
   var tags = [];
@@ -364,6 +367,9 @@
 
   checkAuth();
 })();
+</script>
+<script>
+  ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));
 </script>
 
 </body>

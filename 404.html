@@ -43,8 +43,11 @@
       .error-msg{font-size:0.9rem;}
     }
   </style>
+  <link rel="stylesheet" href="assets/css/themes.css">
 </head>
 <body>
+
+<span id="themeBtnSlot"></span>
 
 <span class="cloud">☁</span>
 <span class="cloud">☁</span>
@@ -68,5 +71,7 @@
   </div>
 </div>
 
+<script src="assets/js/themes.js"></script>
+<script>ThemeSwitcher.createWidget(document.getElementById("themeBtnSlot"));</script>
 </body>
 </html>
